@@ -4,7 +4,6 @@ namespace ControleAcesso.Domain.Entities
     {
         public long UserId { get; private set; }
         public long ProfileId { get; private set; }
-        public bool Active { get; private set; }
         public User User { get; set; }
         public Profile Profile { get; set; }
         protected UserProfile() { }

@@ -9,7 +9,6 @@ namespace ControleAcesso.Domain.Entities
         public string Email { get; private set; } 
         public string UserName { get; private set; } 
         public string Password { get; private set; } 
-        public bool Active { get; private set; } 
         public bool Blocked { get; private set; } 
         protected User() { }
         public User(string name, string email, string userName, string Password)
@@ -21,10 +20,6 @@ namespace ControleAcesso.Domain.Entities
         public void SetPassword (string password)
         {
             Password = password;
-        }
-        public void SetActive(bool active)
-        {
-            Active = active;
         }
         public void SetBlocked(bool blocked)
         {
@@ -39,10 +34,10 @@ namespace ControleAcesso.Domain.Entities
             DomainExceptionValidation.When(string.IsNullOrEmpty(userName), "userName invalido. userName é obrigatório.");
             DomainExceptionValidation.When(userName.Length < 3, "userName invalido. userName deve contar mais de 3 caracteres.");
             DomainExceptionValidation.When(string.IsNullOrEmpty(password), "Senha invalida. Senha é obrigatória.");
-            Name = name;
-            Email = email;
-            UserName = userName;
-            Password = password;
+            Name = name.Trim();
+            Email = email.Trim();
+            UserName = userName.Trim();
+            Password = password.Trim();
         }
         private static bool IsInvalidEmail(string email)
         {
