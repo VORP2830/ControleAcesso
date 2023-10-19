@@ -9,15 +9,15 @@ namespace ControleAcesso.Infra.Data
         public void Configure(EntityTypeBuilder<MenuOption> builder)
         {
             builder.HasKey(mo => mo.Id);
-            
+
             builder.HasOne(mo => mo.MenuDad)
-                .WithMany()
+                .WithMany(mo => mo.MenuOptions)
                 .HasForeignKey(mo => mo.MenuDadId)
                 .IsRequired(false);
-                
+
             builder.HasOne(mo => mo.Functionality)
-                .WithMany()
-                .HasForeignKey(mo => mo.FuncionalityId);
+                .WithOne(f => f.MenuOption)
+                .HasForeignKey<MenuOption>(mo => mo.FuncionalityId);
         }
     }
 }

@@ -9,10 +9,10 @@ namespace ControleAcesso.Infra.Data
         public void Configure(EntityTypeBuilder<Profile> builder)
         {
             builder.HasKey(p => p.Id);
-            
+
             builder.HasMany(p => p.UserProfiles)
-                    .WithOne(up => up.Profile)
-                    .HasForeignKey(up => up.ProfileId);
+                .WithOne(up => up.Profile)
+                .HasForeignKey(up => up.ProfileId);
         }
     }
 }

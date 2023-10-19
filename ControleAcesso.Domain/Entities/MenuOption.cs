@@ -11,8 +11,7 @@ namespace ControleAcesso.Domain.Entities
         public long FuncionalityId { get; private set; }
         public MenuOption MenuDad { get; private set; }
         public Functionality Functionality { get; set; }
-        public IEnumerable<MenuOption> MenuOptions { get; set; }
-        
+        public IEnumerable<MenuOption> MenuOptions { get; set; }        
         protected MenuOption() { }
         public MenuOption(string name, string url, int position, long? menuDadId, long funcionalityId) 
         { 

@@ -9,10 +9,10 @@ namespace ControleAcesso.Infra.Data
         public void Configure(EntityTypeBuilder<Methods> builder)
         {
             builder.HasKey(m => m.Id);
-            
+
             builder.HasOne(m => m.Functionality)
-                    .WithMany(f => f.Methods)
-                    .HasForeignKey(m => m.FunctionalityId);
+                .WithMany(f => f.Methods)
+                .HasForeignKey(m => m.FunctionalityId);
         }
     }
 }

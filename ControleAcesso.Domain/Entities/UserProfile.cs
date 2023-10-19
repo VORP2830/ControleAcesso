@@ -6,6 +6,8 @@ namespace ControleAcesso.Domain.Entities
         public long ProfileId { get; private set; }
         public User User { get; set; }
         public Profile Profile { get; set; }
+        public IEnumerable<Profile> Profilies { get; set; }
+        public IEnumerable<User> Users { get; set; }
         protected UserProfile() { }
         public UserProfile(long userId, long profileId)
         {
