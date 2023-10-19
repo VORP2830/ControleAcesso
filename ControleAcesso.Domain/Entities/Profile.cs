@@ -6,6 +6,8 @@ namespace ControleAcesso.Domain.Entities
     {
         public string Name { get; private set; }
         public string Description { get; private set; }
+        public IEnumerable<UserProfile> UserProfiles { get; private set; }
+        public IEnumerable<FuncionalityProfile> FuncionalityProfiles { get; private set; }
         protected Profile() { }
         public Profile(string name, string description)
         {

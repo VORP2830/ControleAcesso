@@ -6,6 +6,7 @@ namespace ControleAcesso.Domain.Entities
         public long FuncionalityId { get; private set; }
         public Profile Profile { get; private set; }
         public Functionality Functionality { get; set; }
+        public IEnumerable<Functionality> Functionalities { get; set; }
         protected FuncionalityProfile() { }
         public FuncionalityProfile(long profileId, long funcionalityId)
         {

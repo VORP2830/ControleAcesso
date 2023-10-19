@@ -10,6 +10,7 @@ namespace ControleAcesso.Domain.Entities
         public string UserName { get; private set; } 
         public string Password { get; private set; } 
         public bool Blocked { get; private set; } 
+        public IEnumerable<UserProfile> UserProfiles { get; private set; }
         protected User() { }
         public User(string name, string email, string userName, string Password)
         {

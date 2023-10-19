@@ -6,6 +6,9 @@ namespace ControleAcesso.Domain.Entities
     {
         public string Name { get; private set; }
         public string Description { get; private set; }
+        public MenuOption MenuOption { get; private set; }
+        public IEnumerable<Profile> Profiles { get; private set; }
+        public IEnumerable<Methods> Methods { get; private set; }
         protected Functionality() { }
         public Functionality(string name, string description)
         {
