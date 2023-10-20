@@ -26,6 +26,10 @@ namespace ControleAcesso.Infra.Data
                 builder.Property(u => u.Password)
                         .HasMaxLength(300)
                         .IsRequired();
+                
+                builder.HasMany(u => u.UserProfiles)
+                        .WithOne(u => u.User)
+                        .HasForeignKey(u => u.UserId);
         }
     }
 }

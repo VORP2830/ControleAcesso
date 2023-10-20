@@ -21,6 +21,10 @@ namespace ControleAcesso.Infra.Data
             builder.Property(m => m.Description)
                         .HasMaxLength(300)
                         .IsRequired();
+
+            builder.HasOne(m => m.Functionality)
+                        .WithMany(m => m.Methods)
+                        .HasForeignKey(m => m.FunctionalityId);
         }
     }
 }

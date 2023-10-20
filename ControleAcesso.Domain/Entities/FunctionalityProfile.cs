@@ -1,6 +1,6 @@
 namespace ControleAcesso.Domain.Entities
 {
-    public class FuncionalityProfile : BaseEntity
+    public class FunctionalityProfile : BaseEntity
     {
         public long ProfileId { get; private set; }
         public long FuncionalityId { get; private set; }
@@ -8,8 +8,8 @@ namespace ControleAcesso.Domain.Entities
         public Functionality Functionality { get; set; }
         public IEnumerable<Functionality> Functionalities { get; set; }
         public IEnumerable<Profile> Profiles { get; set; }
-        protected FuncionalityProfile() { }
-        public FuncionalityProfile(long profileId, long funcionalityId)
+        protected FunctionalityProfile() { }
+        public FunctionalityProfile(long profileId, long funcionalityId)
         {
             ProfileId = profileId;
             FuncionalityId = funcionalityId;

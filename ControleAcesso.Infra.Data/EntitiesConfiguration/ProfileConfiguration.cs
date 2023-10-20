@@ -17,6 +17,14 @@ namespace ControleAcesso.Infra.Data
             builder.Property(p => p.Description)
                         .HasMaxLength(300)
                         .IsRequired();
+            
+            builder.HasMany(p => p.UserProfiles)
+                        .WithOne(p => p.Profile)
+                        .HasForeignKey(p => p.ProfileId);
+            
+            builder.HasMany(p => p.FunctionalityProfiles)
+                        .WithOne(p => p.Profile)
+                        .HasForeignKey(p => p.ProfileId);
         }
     }
 }

@@ -13,7 +13,7 @@ public class ApplicationDbContext : DbContext
         public DbSet<Methods> Methods { get; set; }
         public DbSet<MenuOption> MenuOptions { get; set; }
         public DbSet<Functionality> Functionalities { get; set; }
-        public DbSet<FuncionalityProfile> FuncionalitiesProfiles { get; set; }
+        public DbSet<FunctionalityProfile> FunctionalitiesProfiles { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

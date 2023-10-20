@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ControleAcesso.Infra.Data
 {
-    public class FuncionalityConfiguration : IEntityTypeConfiguration<Functionality>
+    public class FunctionalityConfiguration : IEntityTypeConfiguration<Functionality>
     {
         public void Configure(EntityTypeBuilder<Functionality> builder)
         {
@@ -17,6 +17,10 @@ namespace ControleAcesso.Infra.Data
             builder.Property(f => f.Description)
                         .HasMaxLength(300)
                         .IsRequired();
+            
+            builder.HasMany(f => f.FunctionalityProfiles)
+                        .WithOne(f => f.Functionality)
+                        .HasForeignKey(f => f.FuncionalityId);
         }
     }
 }

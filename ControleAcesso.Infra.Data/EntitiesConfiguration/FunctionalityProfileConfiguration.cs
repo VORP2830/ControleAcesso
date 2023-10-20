@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ControleAcesso.Infra.Data
 {
-    public class FuncionalityProfileConfiguration : IEntityTypeConfiguration<FuncionalityProfile>
+    public class FunctionalityProfileConfiguration : IEntityTypeConfiguration<FunctionalityProfile>
     {
-        public void Configure(EntityTypeBuilder<FuncionalityProfile> builder)
+        public void Configure(EntityTypeBuilder<FunctionalityProfile> builder)
         {
             builder.HasKey(fp => fp.Id);
         }

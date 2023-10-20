@@ -8,20 +8,20 @@ namespace ControleAcesso.Domain.Entities
         public string URL { get; private set; }
         public int Position { get; private set; }
         public long? MenuDadId { get; private set; }
-        public long FuncionalityId { get; private set; }
+        public long FunctionalityId { get; private set; }
         public MenuOption MenuDad { get; private set; }
         public Functionality Functionality { get; set; }
         public IEnumerable<MenuOption> MenuOptions { get; set; }        
         protected MenuOption() { }
-        public MenuOption(string name, string url, int position, long? menuDadId, long funcionalityId) 
+        public MenuOption(string name, string url, int position, long? menuDadId, long functionalityId) 
         { 
-            ValidateDomain(name, url, position, menuDadId, funcionalityId);
+            ValidateDomain(name, url, position, menuDadId, functionalityId);
             Position = position;
             MenuDadId = menuDadId;
-            FuncionalityId = funcionalityId;
+            FunctionalityId = functionalityId;
             Active = true;
         }
-        private void ValidateDomain(string name, string url, int position, long? menuDadId, long funcionalityId)
+        private void ValidateDomain(string name, string url, int position, long? menuDadId, long functionalityId)
         {
             DomainExceptionValidation.When(string.IsNullOrEmpty(name), "Nome invalido. Nome é obrigatório.");
             DomainExceptionValidation.When(name.Length < 3, "Nome invávido. Nome deve contar mais de 3 caracteres.");
@@ -32,12 +32,12 @@ namespace ControleAcesso.Domain.Entities
             {
                 DomainExceptionValidation.When(menuDadId <= 0, "Menu invávido. Menu deve ter o id maior que 0.");
             }
-            DomainExceptionValidation.When(funcionalityId <= 0, "Funcionalidade invávida. Funcionalidade deve ter o id maior que 0.");
+            DomainExceptionValidation.When(functionalityId <= 0, "Funcionalidade invávida. Funcionalidade deve ter o id maior que 0.");
             Name = name;
             URL = url;
             Position = position;
             MenuDadId = menuDadId;
-            FuncionalityId = funcionalityId;
+            FunctionalityId = functionalityId;
         }
     }
 }
