@@ -10,9 +10,13 @@ namespace ControleAcesso.Infra.Data
         {
             builder.HasKey(p => p.Id);
 
-            builder.HasMany(p => p.UserProfiles)
-                .WithOne(up => up.Profile)
-                .HasForeignKey(up => up.ProfileId);
+            builder.Property(p => p.Name)
+                        .HasMaxLength(50)
+                        .IsRequired();
+            
+            builder.Property(p => p.Description)
+                        .HasMaxLength(300)
+                        .IsRequired();
         }
     }
 }

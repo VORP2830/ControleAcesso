@@ -10,9 +10,17 @@ namespace ControleAcesso.Infra.Data
         {
             builder.HasKey(m => m.Id);
 
-            builder.HasOne(m => m.Functionality)
-                .WithMany(f => f.Methods)
-                .HasForeignKey(m => m.FunctionalityId);
+            builder.Property(m => m.Class)
+                        .HasMaxLength(50)
+                        .IsRequired();
+
+            builder.Property(m => m.Method)
+                        .HasMaxLength(100)
+                        .IsRequired();
+            
+            builder.Property(m => m.Description)
+                        .HasMaxLength(300)
+                        .IsRequired();
         }
     }
 }

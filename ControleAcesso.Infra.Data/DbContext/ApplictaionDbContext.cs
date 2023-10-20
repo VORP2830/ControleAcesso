@@ -14,13 +14,11 @@ public class ApplicationDbContext : DbContext
         public DbSet<MenuOption> MenuOptions { get; set; }
         public DbSet<Functionality> Functionalities { get; set; }
         public DbSet<FuncionalityProfile> FuncionalitiesProfiles { get; set; }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         }
-        
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             foreach (var entry in base.ChangeTracker.Entries<BaseEntity>()

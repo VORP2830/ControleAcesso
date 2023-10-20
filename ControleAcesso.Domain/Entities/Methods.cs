@@ -8,7 +8,7 @@ namespace ControleAcesso.Domain.Entities
         public string Class { get; private set; }
         public string Method { get; private set; }
         public long FunctionalityId { get; private set; }
-        public Functionality Functionality { get; set; }
+        public Functionality Functionality { get; private set; }
         protected Methods() { }
         public Methods(string description, string classe, string method, long functionalityId)
         {
