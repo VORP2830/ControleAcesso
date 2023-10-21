@@ -28,8 +28,8 @@ namespace ControleAcesso.Infra.Data
                         .IsRequired();
                 
                 builder.HasMany(u => u.UserProfiles)
-                        .WithOne(u => u.User)
-                        .HasForeignKey(u => u.UserId);
+                        .WithOne(up => up.User)
+                        .HasForeignKey(up => up.UserId);
         }
     }
 }

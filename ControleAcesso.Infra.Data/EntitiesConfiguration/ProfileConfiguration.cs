@@ -25,6 +25,14 @@ namespace ControleAcesso.Infra.Data
             builder.HasMany(p => p.FunctionalityProfiles)
                         .WithOne(p => p.Profile)
                         .HasForeignKey(p => p.ProfileId);
+
+            builder.HasMany(p => p.UserProfiles)
+                    .WithOne(up => up.Profile)
+                    .HasForeignKey(up => up.ProfileId);
+            
+            builder.HasMany(p => p.FunctionalityProfiles)
+                    .WithOne(up => up.Profile)
+                    .HasForeignKey(up => up.ProfileId);
         }
     }
 }

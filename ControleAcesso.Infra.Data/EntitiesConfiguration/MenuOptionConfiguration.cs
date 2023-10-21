@@ -13,6 +13,10 @@ namespace ControleAcesso.Infra.Data
             builder.Property(mo => mo.Name)
                         .HasMaxLength(50)
                         .IsRequired();
+                        
+            builder.HasOne(mo => mo.Functionality)
+                    .WithOne(f => f.MenuOption)
+                    .HasForeignKey<MenuOption>(mo => mo.FunctionalityId);
         }
     }
 }
