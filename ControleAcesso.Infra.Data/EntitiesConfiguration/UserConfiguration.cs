@@ -1,7 +1,6 @@
 ﻿using ControleAcesso.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.Update.Internal;
 
 namespace ControleAcesso.Infra.Data
 {

@@ -7,12 +7,12 @@ namespace ControleAcesso.Infra.IoC;
 
 public static class DependecyInjection
 {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection service, IConfiguration configuration)
-        {
-            var connectionString = Environment.GetEnvironmentVariable("DATABASE") ?? configuration.GetConnectionString("DefaultConnection");
-            service.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(connectionString, b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+    public static IServiceCollection AddInfrastructure(this IServiceCollection service, IConfiguration configuration)
+    {
+        var connectionString = Environment.GetEnvironmentVariable("DATABASE") ?? configuration.GetConnectionString("DefaultConnection");
+        service.AddDbContext<ApplicationDbContext>(options =>
+            options.UseNpgsql(connectionString, b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
-            return service;
-        }
+        return service;
+    }
 }
