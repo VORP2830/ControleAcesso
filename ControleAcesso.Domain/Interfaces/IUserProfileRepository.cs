@@ -4,9 +4,9 @@ namespace ControleAcesso.Domain.Interfaces
 {
     public interface IUserProfileRepository : IGenericRepository<UserProfile>
     {
-        Task<UserProfile> GetAllAsync();
+        Task<IEnumerable<UserProfile>> GetAllAsync();
         Task<UserProfile> GetByIdAsync(int id);
-        Task<UserProfile> GetByUserIdAsync(int userId);
-        Task<UserProfile> GetByProfileIdAsync(int profileId);
+        Task<IEnumerable<UserProfile>> GetByUserIdAsync(int userId);
+        Task<IEnumerable<UserProfile>> GetByProfileIdAsync(int profileId);
     }
 }

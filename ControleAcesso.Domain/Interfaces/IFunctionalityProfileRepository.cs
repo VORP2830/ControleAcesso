@@ -4,9 +4,9 @@ namespace ControleAcesso.Domain.Interfaces
 {
     public interface IFunctionalityProfileRepository : IGenericRepository<FunctionalityProfile>
     {
-        Task<FunctionalityProfile> GetAllAsync();
+        Task<IEnumerable<FunctionalityProfile>> GetAllAsync();
         Task<FunctionalityProfile> GetByIdAsync(int id);
-        Task<FunctionalityProfile> GetByProfileIdAsync(int profileId);
-        Task<FunctionalityProfile> GetByFunctionalityIdAsync(int functionalityId);
+        Task<IEnumerable<FunctionalityProfile>> GetByProfileIdAsync(int profileId);
+        Task<IEnumerable<FunctionalityProfile>> GetByFunctionalityIdAsync(int functionalityId);
     }
 }

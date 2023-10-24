@@ -10,20 +10,19 @@ namespace ControleAcesso.Infra.Data.Repository
         {
             _context = context;
         }
-        //#TODO Implementar Repositorios do UnitOfWork
-        public IUserRepository UserRepository => throw new NotImplementedException();
+        public IUserRepository UserRepository => new UserRepository(_context);
 
-        public IUserProfileRepository UserProfileRepository => throw new NotImplementedException();
+        public IUserProfileRepository UserProfileRepository => new UserProfileRepository(_context);
 
-        public IProfileRepository ProfileRepository => throw new NotImplementedException();
+        public IProfileRepository ProfileRepository => new ProfileRepository(_context);
 
-        public IFunctionalityProfileRepository FunctionalityProfileRepository => throw new NotImplementedException();
+        public IFunctionalityProfileRepository FunctionalityProfileRepository => new FunctionalityProfileRepository(_context);
 
-        public IFunctionalityRepository FunctionalityRepository => throw new NotImplementedException();
+        public IFunctionalityRepository FunctionalityRepository => new FunctionalityRepository(_context);
 
-        public IMethodRepository MethodRepository => throw new NotImplementedException();
+        public IMethodRepository MethodRepository => new MethodRepository(_context);
 
-        public IMenuOptionRepository MenuOptionRepository => throw new NotImplementedException();
+        public IMenuOptionRepository MenuOptionRepository => new MenuOptionRepository(_context);
 
         public async Task<bool> SaveChangesAsync()
         {

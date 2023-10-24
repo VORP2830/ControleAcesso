@@ -11,22 +11,22 @@ namespace ControleAcesso.Domain.Tests
             string name = "Home";
             string url = "/home";
             int position = 1;
-            long? menuDad = null;
-            long functionalityId = 1;
+            long? menuDadId = null; 
+            long functionalityId = 1; 
 
-            var menuOption = new MenuOption(name, url, position, menuDad, functionalityId);
+            var menuOption = new MenuOption(name, url, position, menuDadId, functionalityId);
 
             Assert.Equal(name, menuOption.Name);
             Assert.Equal(url, menuOption.URL);
             Assert.Equal(position, menuOption.Position);
-            Assert.Equal(menuDad, menuOption.MenuDad);
-            Assert.Equal(functionalityId, menuOption.FuncionalityId);
+            Assert.Equal(menuDadId, menuOption.MenuDadId);
+            Assert.Equal(functionalityId, menuOption.FunctionalityId);
         }
 
         [Fact(DisplayName = "Create MenuOption With Invalid Name Should Throw Exception")]
         public void CreateMenuOption_WithInvalidName_ShouldThrowException()
         {
-            string name = "H"; // Invalid, less than 3 characters
+            string name = "H";
             string url = "/home";
             int position = 1;
             long? menuDad = null;
