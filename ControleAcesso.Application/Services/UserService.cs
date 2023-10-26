@@ -12,10 +12,12 @@ namespace ControleAcesso.Application.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public UserService(IMapper mapper, IUnitOfWork unitOfWork)
+        private readonly ITokenService _tokenService;
+        public UserService(IMapper mapper, IUnitOfWork unitOfWork, ITokenService tokenService)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _tokenService = tokenService;
         }
         public async Task<IEnumerable<UserDTO>> GetAll()
         {
@@ -37,7 +39,7 @@ namespace ControleAcesso.Application.Services
             User user = await _unitOfWork.UserRepository.GetByUserNameAsync(userName);
             return _mapper.Map<UserDTO>(user);
         }
-        public async Task<UserDTO> Login(UserLoginDTO model, string ipClient)
+        public async Task<Object> Login(UserLoginDTO model, string ipClient)
         {
             UserAccess userAccess = new UserAccess(model.UserName, ipClient);
             User userLogin = await _unitOfWork.UserRepository.GetByUserNameAsync(model.UserName);
@@ -61,9 +63,13 @@ namespace ControleAcesso.Application.Services
             userAccess.SetSuccess(isSuccess);
             _unitOfWork.UserAccessRepository.Add(userAccess);
             await _unitOfWork.SaveChangesAsync();
-            return _mapper.Map<UserDTO>(userLogin);
+            var token = await _tokenService.GenerateToken(userLogin.Id, userLogin.UserName);
+            return new {
+                    name = userLogin.Name,
+                    token = token
+                };
         }
-        public async Task<UserDTO> Create(UserRegistrationDTO model, string ipClient)
+        public async Task<Object> Create(UserRegistrationDTO model, string ipClient)
         {
             UserAccess userAccess = new UserAccess(model.UserName, ipClient);
             User userEmail = await _unitOfWork.UserRepository.GetByEmailAsync(model.Email);
@@ -84,7 +90,11 @@ namespace ControleAcesso.Application.Services
             _unitOfWork.UserAccessRepository.Add(userAccess);
             _unitOfWork.UserRepository.Add(user);
             await _unitOfWork.SaveChangesAsync();
-            return _mapper.Map<UserDTO>(user);
+            var token = await _tokenService.GenerateToken(user.Id, user.UserName);
+            return new {
+                    name = user.Name,
+                    token = token
+            };
         }
         public async Task<UserDTO> Update(UserDTO model, long userId)
         {

@@ -23,6 +23,7 @@ public static class DependecyInjection
         service.AddScoped<IUnitOfWork, UnitOfWork>();
         //Service
         service.AddScoped<IUserService, UserService>();
+        service.AddScoped<ITokenService, TokenService>();
         
         return service;
     }
