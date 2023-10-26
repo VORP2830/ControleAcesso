@@ -16,18 +16,18 @@ namespace ControleAcesso.Infra.Data.Repository
             return await _context.UsersProfiles
                                     .ToListAsync();
         }
-        public async Task<UserProfile> GetByIdAsync(int id)
+        public async Task<UserProfile> GetByIdAsync(long id)
         {
             return await _context.UsersProfiles
                                     .FirstOrDefaultAsync(up => up.Id == id);
         }
-        public async Task<IEnumerable<UserProfile>> GetByProfileIdAsync(int profileId)
+        public async Task<IEnumerable<UserProfile>> GetByProfileIdAsync(long profileId)
         {
             return await _context.UsersProfiles
                                     .Where(up => up.ProfileId == profileId)
                                     .ToListAsync();
         }
-        public async Task<IEnumerable<UserProfile>> GetByUserIdAsync(int userId)
+        public async Task<IEnumerable<UserProfile>> GetByUserIdAsync(long userId)
         {
             return await _context.UsersProfiles
                                     .Where(up => up.UserId == userId)

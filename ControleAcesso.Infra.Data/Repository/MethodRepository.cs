@@ -16,13 +16,13 @@ namespace ControleAcesso.Infra.Data.Repository
             return await _context.Methods
                                     .ToListAsync();
         }
-        public async Task<IEnumerable<Methods>> GetByFunctionalityIdAsync(int functionalityId)
+        public async Task<IEnumerable<Methods>> GetByFunctionalityIdAsync(long functionalityId)
         {
             return await _context.Methods
                                     .Where(m => m.FunctionalityId == functionalityId)
                                     .ToListAsync();
         }
-        public async Task<Methods> GetByIdAsync(int id)
+        public async Task<Methods> GetByIdAsync(long id)
         {
             return await _context.Methods
                                     .FirstOrDefaultAsync(m => m.Id == id);

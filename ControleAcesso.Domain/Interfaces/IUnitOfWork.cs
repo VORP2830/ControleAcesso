@@ -9,6 +9,7 @@ namespace ControleAcesso.Domain.Interfaces
         IFunctionalityRepository FunctionalityRepository { get; }
         IMethodRepository MethodRepository { get; }
         IMenuOptionRepository MenuOptionRepository { get; }
+        IUserAccessRepository UserAccessRepository { get; }
         Task<bool> SaveChangesAsync(); 
     }
 }

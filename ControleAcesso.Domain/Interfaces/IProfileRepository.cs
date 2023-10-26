@@ -5,6 +5,6 @@ namespace ControleAcesso.Domain.Interfaces
     public interface IProfileRepository : IGenericRepository<Profile>
     {
         Task<IEnumerable<Profile>> GetAllAsync();
-        Task<Profile> GetByIdAsync(int id);
+        Task<Profile> GetByIdAsync(long id);
     }
 }

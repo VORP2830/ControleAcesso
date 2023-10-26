@@ -16,7 +16,7 @@ namespace ControleAcesso.Infra.Data.Repository
             return await _context.Functionalities
                                     .ToListAsync();
         }
-        public async Task<Functionality> GetByIdAsync(int id)
+        public async Task<Functionality> GetByIdAsync(long id)
         {
             return await _context.Functionalities
                                     .FirstOrDefaultAsync(f => f.Id == id);

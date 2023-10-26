@@ -21,7 +21,7 @@ namespace ControleAcesso.Infra.Data.Repository
             return await _context.Users
                                     .FirstOrDefaultAsync(u => u.Email == email);
         }
-        public async Task<User> GetByIdAsync(int id)
+        public async Task<User> GetByIdAsync(long id)
         {
             return await _context.Users
                                     .FirstOrDefaultAsync(u => u.Id == id);

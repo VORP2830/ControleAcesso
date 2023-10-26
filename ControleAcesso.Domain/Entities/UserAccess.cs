@@ -12,7 +12,7 @@ namespace ControleAcesso.Domain.Entities
         {
             UserName = userName;
             IP = ip;
-            AccessDate = DateTime.Now;
+            AccessDate = DateTime.UtcNow;
             Success = false;
         }
         public void SetSuccess(bool success)

@@ -24,10 +24,10 @@ public class ApplicationDbContext : DbContext
             foreach (var entry in base.ChangeTracker.Entries<BaseEntity>()
                 .Where(q => q.State == EntityState.Added || q.State == EntityState.Modified))
             {
-                entry.Entity.ModifiedAt = DateTime.Now;
+                entry.Entity.ModifiedAt = DateTime.UtcNow;
                 if (entry.State == EntityState.Added)
                 {
-                    entry.Entity.CreatedAt = DateTime.Now;
+                    entry.Entity.CreatedAt = DateTime.UtcNow;
                 }
             }
             return base.SaveChangesAsync(cancellationToken);

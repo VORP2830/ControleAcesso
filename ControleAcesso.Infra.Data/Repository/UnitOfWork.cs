@@ -23,6 +23,7 @@ namespace ControleAcesso.Infra.Data.Repository
         public IMethodRepository MethodRepository => new MethodRepository(_context);
 
         public IMenuOptionRepository MenuOptionRepository => new MenuOptionRepository(_context);
+        public IUserAccessRepository UserAccessRepository => new UserAccessRepository(_context);
 
         public async Task<bool> SaveChangesAsync()
         {

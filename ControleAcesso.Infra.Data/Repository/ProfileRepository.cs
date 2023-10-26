@@ -16,7 +16,7 @@ namespace ControleAcesso.Infra.Data.Repository
             return await _context.Profiles
                                     .ToListAsync();
         }
-        public async Task<Profile> GetByIdAsync(int id)
+        public async Task<Profile> GetByIdAsync(long id)
         {
             return await _context.Profiles
                                     .FirstOrDefaultAsync(p => p.Id == id);

@@ -17,12 +17,12 @@ namespace ControleAcesso.Infra.Data.Repository
             return await _context.MenuOptions
                                     .ToListAsync();
         }
-        public async Task<MenuOption> GetByIdAsync(int id)
+        public async Task<MenuOption> GetByIdAsync(long id)
         {
             return await _context.MenuOptions
                                     .FirstOrDefaultAsync(mo => mo.Id == id);
         }
-        public async Task<IEnumerable<MenuOption>> GetByFunctionalityIdAsync(int functionalityId)
+        public async Task<IEnumerable<MenuOption>> GetByFunctionalityIdAsync(long functionalityId)
         {
             return await _context.MenuOptions
                                     .Where(mo => mo.FunctionalityId == functionalityId)
