@@ -1,6 +1,7 @@
 using AutoMapper;
 using ControleAcesso.Application.DTOs;
 using ControleAcesso.Application.Interfaces;
+using ControleAcesso.Domain.Entities;
 using ControleAcesso.Domain.Interfaces;
 
 namespace ControleAcesso.Application.Services
@@ -14,29 +15,42 @@ namespace ControleAcesso.Application.Services
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
-        public Task<IEnumerable<MenuOptionDTO>> GetAll()
+        public async Task<IEnumerable<MenuOptionDTO>> GetAll()
         {
-            throw new NotImplementedException();
+            IEnumerable<MenuOption> menuOptions = await _unitOfWork.MenuOptionRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<MenuOptionDTO>>(menuOptions);
         }
-        public Task<IEnumerable<MenuOptionDTO>> GetByFunctionalityId(long functionalityId)
+        public async Task<IEnumerable<MenuOptionDTO>> GetByFunctionalityId(long functionalityId)
         {
-            throw new NotImplementedException();
+            IEnumerable<MenuOption> menuOptions = await _unitOfWork.MenuOptionRepository.GetByFunctionalityIdAsync(functionalityId);
+            return _mapper.Map<IEnumerable<MenuOptionDTO>>(menuOptions);
         }
-        public Task<MenuOptionDTO> GetById(long id)
+        public async Task<MenuOptionDTO> GetById(long id)
         {
-            throw new NotImplementedException();
+            MenuOption menuOption = await _unitOfWork.MenuOptionRepository.GetByIdAsync(id);
+            return _mapper.Map<MenuOptionDTO>(menuOption);
         }
-        public Task<MenuOptionDTO> Update(MenuOptionDTO model)
+        public async Task<MenuOptionDTO> Update(MenuOptionDTO model)
         {
-            throw new NotImplementedException();
+            MenuOption menuOption = _mapper.Map<MenuOption>(model);
+            _unitOfWork.MenuOptionRepository.Update(menuOption);
+            await _unitOfWork.SaveChangesAsync();
+            return model;
         }
-        public Task<MenuOptionDTO> Create(MenuOptionDTO model)
+        public async Task<MenuOptionDTO> Create(MenuOptionDTO model)
         {
-            throw new NotImplementedException();
+            MenuOption menuOption = _mapper.Map<MenuOption>(model);
+            _unitOfWork.MenuOptionRepository.Add(menuOption);
+            await _unitOfWork.SaveChangesAsync();
+            return model;
         }
-        public Task<MenuOptionDTO> Delete(long id)
+        public async Task<MenuOptionDTO> Delete(long id)
         {
-            throw new NotImplementedException();
+            MenuOption menuOption = await _unitOfWork.MenuOptionRepository.GetByIdAsync(id);
+            menuOption.SetActive(false);
+            _unitOfWork.MenuOptionRepository.Update(menuOption);
+            await _unitOfWork.SaveChangesAsync();
+            return _mapper.Map<MenuOptionDTO>(menuOption);
         }
     }
 }

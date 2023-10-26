@@ -36,8 +36,8 @@ namespace ControleAcesso.Domain.Entities
             DomainExceptionValidation.When(userName.Length < 3, "userName invalido. userName deve contar mais de 3 caracteres.");
             DomainExceptionValidation.When(string.IsNullOrEmpty(password), "Senha invalida. Senha é obrigatória.");
             Name = name.Trim();
-            Email = email.Trim();
-            UserName = userName.Trim();
+            Email = email.Trim().ToLower();
+            UserName = userName.Trim().ToLower();
             Password = password.Trim();
         }
         private static bool IsInvalidEmail(string email)

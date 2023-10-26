@@ -67,7 +67,7 @@ namespace ControleAcesso.Application.Services
             return new {
                     name = userLogin.Name,
                     token = token
-                };
+            };
         }
         public async Task<Object> Create(UserRegistrationDTO model, string ipClient)
         {
