@@ -52,5 +52,14 @@ namespace ControleAcesso.Application.Services
             await _unitOfWork.SaveChangesAsync();
             return _mapper.Map<MethodDTO>(method);
         }
+        public async Task<bool> GetPermissionMethodByUserId(long userId, string className, string action)
+        {
+            Methods method = await _unitOfWork.MethodRepository.GetMethodByUserId(userId, className, action);
+            if (method != null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

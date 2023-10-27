@@ -20,6 +20,16 @@ namespace ControleAcesso.Domain.Entities
             FunctionalityId = functionalityId;
             Active = true;
         }
+        public MenuOption(long id, string name, string url, int position, long? menuDadId, long functionalityId) 
+        { 
+            DomainExceptionValidation.When(id < 0, "Id invalido. O id deve ser maior que 0");
+            Id = id;
+            ValidateDomain(name, url, position, menuDadId, functionalityId);
+            Position = position;
+            MenuDadId = menuDadId;
+            FunctionalityId = functionalityId;
+            Active = true;
+        }
         private void ValidateDomain(string name, string url, int position, long? menuDadId, long functionalityId)
         {
             DomainExceptionValidation.When(string.IsNullOrEmpty(name), "Nome invalido. Nome é obrigatório.");

@@ -7,5 +7,6 @@ namespace ControleAcesso.Domain.Interfaces
         Task<IEnumerable<Methods>> GetAllAsync();
         Task<Methods> GetByIdAsync(long id);
         Task<IEnumerable<Methods>> GetByFunctionalityIdAsync(long functionalityId);
+        Task<Methods> GetMethodByUserId(long userId, string className, string action);
     }
 }

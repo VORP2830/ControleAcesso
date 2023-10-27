@@ -33,6 +33,10 @@ namespace ControleAcesso.Infra.Data
             builder.HasMany(p => p.FunctionalityProfiles)
                     .WithOne(up => up.Profile)
                     .HasForeignKey(up => up.ProfileId);
+
+            builder.HasData(
+                new Profile(1, "Administrador", "Administrador do sistema")
+            );
         }
     }
 }

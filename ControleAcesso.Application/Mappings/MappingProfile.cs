@@ -10,6 +10,7 @@ namespace ControleAcesso.Application.Mappings
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<User, UserLoginDTO>().ReverseMap();
             CreateMap<User, UserRegistrationDTO>().ReverseMap();
+            CreateMap<User, UserUpdateDTO>().ReverseMap();
             CreateMap<UserProfile, UserProfileDTO>().ReverseMap();
             CreateMap<Profile, ProfileDTO>().ReverseMap();
             CreateMap<FunctionalityProfile, FunctionalityProfileDTO>().ReverseMap();

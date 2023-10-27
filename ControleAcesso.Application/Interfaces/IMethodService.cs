@@ -10,5 +10,6 @@ namespace ControleAcesso.Application.Interfaces
         Task<MethodDTO> Create(MethodDTO model);
         Task<MethodDTO> Update(MethodDTO model);
         Task<MethodDTO> Delete(long id);
+        Task<bool> GetPermissionMethodByUserId(long userId, string classe, string method);
     }
 }

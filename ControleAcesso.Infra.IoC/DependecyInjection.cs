@@ -24,7 +24,13 @@ public static class DependecyInjection
         //Service
         service.AddScoped<IUserService, UserService>();
         service.AddScoped<ITokenService, TokenService>();
-        
+        service.AddScoped<IUserProfileService, UserProfileService>();
+        service.AddScoped<IProfileService, ProfileService>();
+        service.AddScoped<IFunctionalityProfileService, FunctionalityProfileService>();
+        service.AddScoped<IFunctionalityService, FunctionalityService>();
+        service.AddScoped<IMethodService, MethodService>();
+        service.AddScoped<IMenuOptionService, MenuOptionService>();
+
         return service;
     }
 }

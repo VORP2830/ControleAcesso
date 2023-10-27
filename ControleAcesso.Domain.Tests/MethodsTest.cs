@@ -16,8 +16,8 @@ namespace ControleAcesso.Domain.Tests
             var method = new Methods(description, className, methodName, functionalityId);
 
             Assert.Equal(description, method.Description);
-            Assert.Equal(className, method.Class);
-            Assert.Equal(methodName, method.Method);
+            Assert.Equal(className, method.ClassName);
+            Assert.Equal(methodName, method.Action);
             Assert.Equal(functionalityId, method.FunctionalityId);
         }
 

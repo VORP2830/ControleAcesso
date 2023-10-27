@@ -1,3 +1,5 @@
+using ControleAcesso.Domain.Validation;
+
 namespace ControleAcesso.Domain.Entities
 {
     public class FunctionalityProfile : BaseEntity
@@ -9,6 +11,14 @@ namespace ControleAcesso.Domain.Entities
         protected FunctionalityProfile() { }
         public FunctionalityProfile(long profileId, long functionalityId)
         {
+            ProfileId = profileId;
+            FunctionalityId = functionalityId;
+            Active = true;
+        }
+        public FunctionalityProfile(long id, long profileId, long functionalityId)
+        {
+            DomainExceptionValidation.When(id < 0, "Id invalido. O id deve ser maior que 0");
+            Id = id;
             ProfileId = profileId;
             FunctionalityId = functionalityId;
             Active = true;

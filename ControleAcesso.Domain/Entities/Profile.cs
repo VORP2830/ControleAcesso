@@ -14,6 +14,13 @@ namespace ControleAcesso.Domain.Entities
             ValidateDomain(name, description);
             Active = true;
         }
+        public Profile(long id, string name, string description)
+        {
+            DomainExceptionValidation.When(id < 0, "Id invalido. O id deve ser maior que 0");
+            Id = id;
+            ValidateDomain(name, description);
+            Active = true;
+        }
         private void ValidateDomain(string name, string description)
         {
             DomainExceptionValidation.When(string.IsNullOrEmpty(name), "Nome invalido. Nome é obrigatório.");

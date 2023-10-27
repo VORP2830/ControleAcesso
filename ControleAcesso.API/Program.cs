@@ -1,3 +1,4 @@
+using ControleAcesso.API.Middleware;
 using ControleAcesso.Infra.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,9 +22,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(x => x.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin());
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+//Middleware to check user permissions
+app.UseMiddleware<PermissionMiddleware>();
 
 app.MapControllers();
 

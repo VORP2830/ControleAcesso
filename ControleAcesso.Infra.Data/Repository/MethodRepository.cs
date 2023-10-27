@@ -27,5 +27,17 @@ namespace ControleAcesso.Infra.Data.Repository
             return await _context.Methods
                                     .FirstOrDefaultAsync(m => m.Id == id);
         }
+        public async Task<Methods> GetMethodByUserId(long userId, string className, string action)
+        {
+            return await _context.UsersProfiles
+                                    .Where(up => up.UserId == userId)
+                                    .SelectMany(up => up.Profile.FunctionalityProfiles)
+                                    .SelectMany(fp => fp.Functionality.Methods)
+                                    .Where(method => 
+                                        method.ClassName == className &&
+                                        method.Action == action)
+                                    .Distinct()
+                                    .FirstOrDefaultAsync();
+        }
     }
 }

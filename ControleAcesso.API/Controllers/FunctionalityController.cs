@@ -1,4 +1,3 @@
-using ControleAcesso.API.Extensions;
 using ControleAcesso.Application.DTOs;
 using ControleAcesso.Application.Exceptions;
 using ControleAcesso.Application.Interfaces;
@@ -11,88 +10,19 @@ namespace ControleAcesso.API.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController : ControllerBase
+    public class FunctionalityController : ControllerBase
     {
-        private readonly IUserService _userService;
-
-        public UserController(IUserService userService)
+        private readonly IFunctionalityService _functionalityService;
+        public FunctionalityController(IFunctionalityService functionalityService)
         {
-            _userService = userService;
-        }
-        [HttpPost("Register")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Register(UserRegistrationDTO model)
+            _functionalityService = functionalityService;
+        } 
+        [HttpGet("GetAllFunctionality")]
+        public async Task<IActionResult> GetAllFunctionality()
         {
             try
             {
-                var result = await _userService.Create(model, HttpContext.Connection.RemoteIpAddress.ToString());
-                return Ok(result);
-            }
-            catch(ControleAcessoException ex)
-            {
-                var errorResponse = new
-                {
-                    Message = ex.Message
-                };
-                return BadRequest(errorResponse);
-            }
-            catch(DomainExceptionValidation ex)
-            {
-                var errorResponse = new
-                {
-                    Message = ex.Message
-                };
-                return BadRequest(errorResponse);
-            }
-            catch (Exception ex)
-            {
-                var errorResponse = new
-                {
-                    Message = "Erro ao tentar adicionar usuário",
-                };
-                return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
-            }
-        }
-        [HttpPost("Login")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Login(UserLoginDTO model)
-        {
-            try
-            {
-                var result = await _userService.Login(model, HttpContext.Connection.RemoteIpAddress.ToString());
-                return Ok(result);
-            }
-            catch (ControleAcessoException ex)
-            {
-                var errorResponse = new 
-                {
-                    Message = ex.Message
-                };
-                return BadRequest(errorResponse);
-            }
-            catch(DomainExceptionValidation ex)
-            {
-                var errorResponse = new
-                {
-                    Message = ex.Message
-                };
-                return BadRequest(errorResponse);
-            }
-            catch (Exception ex)
-            {
-                var errorResponse = new 
-                {
-                    Message = "Erro ao tentar fazer login"
-                };
-                return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
-            }
-        }
-        [HttpGet("GetAllUsers")]
-        public async Task<IActionResult> GetAllUsers()
-        {
-            try
-            {
-                var result = await _userService.GetAll();
+                var result = await _functionalityService.GetAll();
                 return Ok(result);
             }
             catch (ControleAcessoException ex)
@@ -115,7 +45,7 @@ namespace ControleAcesso.API.Controllers
             {
                 var errorResponse = new 
                 {
-                    Message = "Erro ao tentar pegar todos os usuário",
+                    Message = "Erro ao tentar pegar todos as funcionalidades",
                 };
                 return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }
@@ -125,7 +55,7 @@ namespace ControleAcesso.API.Controllers
         {
             try
             {
-                var result = await _userService.GetById(id);
+                var result = await _functionalityService.GetById(id);
                 return Ok(result);
             }
             catch (ControleAcessoException ex)
@@ -148,50 +78,17 @@ namespace ControleAcesso.API.Controllers
             {
                 var errorResponse = new 
                 {
-                    Message = "Erro ao tentar pegar usuário",
+                    Message = "Erro ao tentar pegar funcionalidade",
                 };
                 return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }
         }
-        [HttpGet("GetPersonalUser")]
-        public async Task<IActionResult> GetPersonalUser()
+        [HttpPost("CreateFunctionality")]
+        public async Task<IActionResult> Create(FunctionalityDTO model)
         {
             try
             {
-                var result = await _userService.GetById(User.GetUserId());
-                return Ok(result);
-            }
-            catch (ControleAcessoException ex)
-            {
-                var errorResponse = new 
-                {
-                    Message = ex.Message
-                };
-                return BadRequest(errorResponse);
-            }
-            catch(DomainExceptionValidation ex)
-            {
-                var errorResponse = new
-                {
-                    Message = ex.Message
-                };
-                return BadRequest(errorResponse);
-            }
-            catch (Exception)
-            {
-                var errorResponse = new 
-                {
-                    Message = "Erro ao tentar pegar usuário",
-                };
-                return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
-            }
-        }
-        [HttpPut("UpdatePersonalUser")]
-        public async Task<IActionResult> UpdatePerosnalUser(UserUpdateDTO model)
-        {
-            try
-            {
-                var result = await _userService.Update(model, User.GetUserId());
+                var result = await _functionalityService.Create(model);
                 return Ok(result);
             }
             catch(ControleAcessoException ex)
@@ -214,17 +111,50 @@ namespace ControleAcesso.API.Controllers
             {
                 var errorResponse = new
                 {
-                    Message = "Erro ao tentar alterar usuário",
+                    Message = "Erro ao tentar criar funcionalidade",
                 };
                 return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }
         }
-        [HttpDelete("DeleteUser/{id}")]
+        [HttpPut("UpdateFunctionality")]
+        public async Task<IActionResult> Update(FunctionalityDTO model)
+        {
+            try
+            {
+                var result = await _functionalityService.Update(model);
+                return Ok(result);
+            }
+            catch(ControleAcessoException ex)
+            {
+                var errorResponse = new
+                {
+                    Message = ex.Message
+                };
+                return BadRequest(errorResponse);
+            }
+            catch(DomainExceptionValidation ex)
+            {
+                var errorResponse = new
+                {
+                    Message = ex.Message
+                };
+                return BadRequest(errorResponse);
+            }
+            catch (Exception)
+            {
+                var errorResponse = new
+                {
+                    Message = "Erro ao tentar alterar funcionalidade",
+                };
+                return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
+            }
+        }
+        [HttpDelete("DeleteFunctionality/{id}")]
         public async Task<IActionResult> Delete(long id)
         {
             try
             {
-                var result = await _userService.Delete(id);
+                var result = await _functionalityService.Delete(id);
                 return Ok(result);
             }
             catch(ControleAcessoException ex)
@@ -247,7 +177,7 @@ namespace ControleAcesso.API.Controllers
             {
                 var errorResponse = new
                 {
-                    Message = "Erro ao tentar deletar usuário"
+                    Message = "Erro ao tentar deletar funcionalidade",
                 };
                 return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }

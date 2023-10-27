@@ -11,88 +11,19 @@ namespace ControleAcesso.API.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController : ControllerBase
+    public class MenuOptionController : ControllerBase
     {
-        private readonly IUserService _userService;
-
-        public UserController(IUserService userService)
+        private readonly IMenuOptionService _menuOptionService;
+        public MenuOptionController(IMenuOptionService menuOptionService)
         {
-            _userService = userService;
-        }
-        [HttpPost("Register")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Register(UserRegistrationDTO model)
+            _menuOptionService = menuOptionService;
+        } 
+        [HttpGet("GetAllMenuOption")]
+        public async Task<IActionResult> GetAllMenuOption()
         {
             try
             {
-                var result = await _userService.Create(model, HttpContext.Connection.RemoteIpAddress.ToString());
-                return Ok(result);
-            }
-            catch(ControleAcessoException ex)
-            {
-                var errorResponse = new
-                {
-                    Message = ex.Message
-                };
-                return BadRequest(errorResponse);
-            }
-            catch(DomainExceptionValidation ex)
-            {
-                var errorResponse = new
-                {
-                    Message = ex.Message
-                };
-                return BadRequest(errorResponse);
-            }
-            catch (Exception ex)
-            {
-                var errorResponse = new
-                {
-                    Message = "Erro ao tentar adicionar usuário",
-                };
-                return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
-            }
-        }
-        [HttpPost("Login")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Login(UserLoginDTO model)
-        {
-            try
-            {
-                var result = await _userService.Login(model, HttpContext.Connection.RemoteIpAddress.ToString());
-                return Ok(result);
-            }
-            catch (ControleAcessoException ex)
-            {
-                var errorResponse = new 
-                {
-                    Message = ex.Message
-                };
-                return BadRequest(errorResponse);
-            }
-            catch(DomainExceptionValidation ex)
-            {
-                var errorResponse = new
-                {
-                    Message = ex.Message
-                };
-                return BadRequest(errorResponse);
-            }
-            catch (Exception ex)
-            {
-                var errorResponse = new 
-                {
-                    Message = "Erro ao tentar fazer login"
-                };
-                return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
-            }
-        }
-        [HttpGet("GetAllUsers")]
-        public async Task<IActionResult> GetAllUsers()
-        {
-            try
-            {
-                var result = await _userService.GetAll();
+                var result = await _menuOptionService.GetAll();
                 return Ok(result);
             }
             catch (ControleAcessoException ex)
@@ -115,7 +46,7 @@ namespace ControleAcesso.API.Controllers
             {
                 var errorResponse = new 
                 {
-                    Message = "Erro ao tentar pegar todos os usuário",
+                    Message = "Erro ao tentar pegar todos os menus",
                 };
                 return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }
@@ -125,7 +56,7 @@ namespace ControleAcesso.API.Controllers
         {
             try
             {
-                var result = await _userService.GetById(id);
+                var result = await _menuOptionService.GetById(id);
                 return Ok(result);
             }
             catch (ControleAcessoException ex)
@@ -148,17 +79,17 @@ namespace ControleAcesso.API.Controllers
             {
                 var errorResponse = new 
                 {
-                    Message = "Erro ao tentar pegar usuário",
+                    Message = "Erro ao tentar pegar menu",
                 };
                 return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }
         }
-        [HttpGet("GetPersonalUser")]
-        public async Task<IActionResult> GetPersonalUser()
+        [HttpGet("GetByFunctionalityId/{id}")]
+        public async Task<IActionResult> GetByFunctionalityId(long id)
         {
             try
             {
-                var result = await _userService.GetById(User.GetUserId());
+                var result = await _menuOptionService.GetByFunctionalityId(id);
                 return Ok(result);
             }
             catch (ControleAcessoException ex)
@@ -181,17 +112,50 @@ namespace ControleAcesso.API.Controllers
             {
                 var errorResponse = new 
                 {
-                    Message = "Erro ao tentar pegar usuário",
+                    Message = "Erro ao tentar pegar menus por funcionalidade",
                 };
                 return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }
         }
-        [HttpPut("UpdatePersonalUser")]
-        public async Task<IActionResult> UpdatePerosnalUser(UserUpdateDTO model)
+        [HttpGet("GetForUserIdAsync")]
+        public async Task<IActionResult> GetForUserIdAsync()
         {
             try
             {
-                var result = await _userService.Update(model, User.GetUserId());
+                var result = await _menuOptionService.GetForUserIdAsync(User.GetUserId());
+                return Ok(result);
+            }
+            catch (ControleAcessoException ex)
+            {
+                var errorResponse = new 
+                {
+                    Message = ex.Message
+                };
+                return BadRequest(errorResponse);
+            }
+            catch(DomainExceptionValidation ex)
+            {
+                var errorResponse = new
+                {
+                    Message = ex.Message
+                };
+                return BadRequest(errorResponse);
+            }
+            catch (Exception)
+            {
+                var errorResponse = new 
+                {
+                    Message = "Erro ao tentar pegar todos os menus",
+                };
+                return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
+            }
+        }
+        [HttpPost("CreateMenu")]
+        public async Task<IActionResult> Create(MenuOptionDTO model)
+        {
+            try
+            {
+                var result = await _menuOptionService.Create(model);
                 return Ok(result);
             }
             catch(ControleAcessoException ex)
@@ -214,17 +178,50 @@ namespace ControleAcesso.API.Controllers
             {
                 var errorResponse = new
                 {
-                    Message = "Erro ao tentar alterar usuário",
+                    Message = "Erro ao tentar criar menu",
                 };
                 return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }
         }
-        [HttpDelete("DeleteUser/{id}")]
+        [HttpPut("UpdateMenu")]
+        public async Task<IActionResult> Update(MenuOptionDTO model)
+        {
+            try
+            {
+                var result = await _menuOptionService.Update(model);
+                return Ok(result);
+            }
+            catch(ControleAcessoException ex)
+            {
+                var errorResponse = new
+                {
+                    Message = ex.Message
+                };
+                return BadRequest(errorResponse);
+            }
+            catch(DomainExceptionValidation ex)
+            {
+                var errorResponse = new
+                {
+                    Message = ex.Message
+                };
+                return BadRequest(errorResponse);
+            }
+            catch (Exception)
+            {
+                var errorResponse = new
+                {
+                    Message = "Erro ao tentar alterar menu",
+                };
+                return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
+            }
+        }
+        [HttpDelete("DeleteMenu/{id}")]
         public async Task<IActionResult> Delete(long id)
         {
             try
             {
-                var result = await _userService.Delete(id);
+                var result = await _menuOptionService.Delete(id);
                 return Ok(result);
             }
             catch(ControleAcessoException ex)
@@ -247,7 +244,7 @@ namespace ControleAcesso.API.Controllers
             {
                 var errorResponse = new
                 {
-                    Message = "Erro ao tentar deletar usuário"
+                    Message = "Erro ao tentar deletar menu",
                 };
                 return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }

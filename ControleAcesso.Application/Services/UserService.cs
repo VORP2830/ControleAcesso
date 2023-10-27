@@ -39,30 +39,32 @@ namespace ControleAcesso.Application.Services
             User user = await _unitOfWork.UserRepository.GetByUserNameAsync(userName);
             return _mapper.Map<UserDTO>(user);
         }
+        //#TODO Resolver problema do bloqueio e adicionar acessos na tabela de acesso usuario
         public async Task<Object> Login(UserLoginDTO model, string ipClient)
         {
             UserAccess userAccess = new UserAccess(model.UserName, ipClient);
             User userLogin = await _unitOfWork.UserRepository.GetByUserNameAsync(model.UserName);
             bool isSuccess = false;
-            if (userLogin != null && userLogin.Active && !userLogin.Blocked)
+            if (userLogin != null)
             {
                 isSuccess = BCryptNet.BCrypt.Verify(model.Password, userLogin.Password);
-            }
-            if (userLogin.Active == false)
-            {
-                throw new ControleAcessoException("Conta desativada. Entre em contato com o administrador");
-            }
-            if (userLogin.Blocked)
-            {
-                throw new ControleAcessoException("Conta bloqueada. Entre em contato com o administrador");
+                if(!isSuccess && userLogin != null)
+                {
+                    //BlockUser(model.UserName);  
+                }
+                if (userLogin.Active == false)
+                {
+                    throw new ControleAcessoException("Conta desativada. Entre em contato com o administrador");
+                }
+                if (userLogin.Blocked)
+                {
+                    throw new ControleAcessoException("Conta bloqueada. Entre em contato com o administrador");
+                }
             }
             if (!isSuccess)
             {
                 throw new ControleAcessoException("Usuário ou senha incorretos");
             }
-            userAccess.SetSuccess(isSuccess);
-            _unitOfWork.UserAccessRepository.Add(userAccess);
-            await _unitOfWork.SaveChangesAsync();
             var token = await _tokenService.GenerateToken(userLogin.Id, userLogin.UserName);
             return new {
                     name = userLogin.Name,
@@ -96,7 +98,7 @@ namespace ControleAcesso.Application.Services
                     token = token
             };
         }
-        public async Task<UserDTO> Update(UserDTO model, long userId)
+        public async Task<UserDTO> Update(UserUpdateDTO model, long userId)
         {
             if(userId != model.Id)
             {
@@ -118,7 +120,7 @@ namespace ControleAcesso.Application.Services
             User userUpdate = _mapper.Map<User>(model);
             _unitOfWork.UserRepository.Update(userUpdate);
             await _unitOfWork.SaveChangesAsync();
-            return model;
+            return _mapper.Map<UserDTO>(model);
         }
         public async Task<UserDTO> Delete(long id)
         {
@@ -127,6 +129,27 @@ namespace ControleAcesso.Application.Services
             _unitOfWork.UserRepository.Update(user);
             await _unitOfWork.SaveChangesAsync();
             return _mapper.Map<UserDTO>(user);
+        }
+        private async Task BlockUser(string userName)
+        {
+            IEnumerable<UserAccess> userAccess = await _unitOfWork.UserAccessRepository.GetTop5ByUserName(userName);
+            if(userAccess.Count() == 5)
+            {
+                bool hasSuccess = userAccess.Any(access => access.Success);
+                if (!hasSuccess)
+                {
+                    User user = await _unitOfWork.UserRepository.GetByUserNameAsync(userName);
+                    user.SetBlocked(true);
+                    _unitOfWork.UserRepository.Update(user);
+                    await _unitOfWork.SaveChangesAsync();
+                }
+            }
+        }
+        private async Task UserAcess(UserAccess userAccess, bool isSuccess)
+        {
+            userAccess.SetSuccess(isSuccess);
+            _unitOfWork.UserAccessRepository.Add(userAccess);
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

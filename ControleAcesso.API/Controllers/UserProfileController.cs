@@ -1,4 +1,3 @@
-using ControleAcesso.API.Extensions;
 using ControleAcesso.Application.DTOs;
 using ControleAcesso.Application.Exceptions;
 using ControleAcesso.Application.Interfaces;
@@ -11,88 +10,20 @@ namespace ControleAcesso.API.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController : ControllerBase
+    public class UserProfileController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IUserProfileService _userProfileService;
 
-        public UserController(IUserService userService)
+        public UserProfileController(IUserProfileService userProfileService)
         {
-            _userService = userService;
+            _userProfileService = userProfileService;
         }
-        [HttpPost("Register")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Register(UserRegistrationDTO model)
+        [HttpGet("GetAllUserProfiles")]
+        public async Task<IActionResult> GetAllUserProfiles()
         {
             try
             {
-                var result = await _userService.Create(model, HttpContext.Connection.RemoteIpAddress.ToString());
-                return Ok(result);
-            }
-            catch(ControleAcessoException ex)
-            {
-                var errorResponse = new
-                {
-                    Message = ex.Message
-                };
-                return BadRequest(errorResponse);
-            }
-            catch(DomainExceptionValidation ex)
-            {
-                var errorResponse = new
-                {
-                    Message = ex.Message
-                };
-                return BadRequest(errorResponse);
-            }
-            catch (Exception ex)
-            {
-                var errorResponse = new
-                {
-                    Message = "Erro ao tentar adicionar usuário",
-                };
-                return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
-            }
-        }
-        [HttpPost("Login")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Login(UserLoginDTO model)
-        {
-            try
-            {
-                var result = await _userService.Login(model, HttpContext.Connection.RemoteIpAddress.ToString());
-                return Ok(result);
-            }
-            catch (ControleAcessoException ex)
-            {
-                var errorResponse = new 
-                {
-                    Message = ex.Message
-                };
-                return BadRequest(errorResponse);
-            }
-            catch(DomainExceptionValidation ex)
-            {
-                var errorResponse = new
-                {
-                    Message = ex.Message
-                };
-                return BadRequest(errorResponse);
-            }
-            catch (Exception ex)
-            {
-                var errorResponse = new 
-                {
-                    Message = "Erro ao tentar fazer login"
-                };
-                return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
-            }
-        }
-        [HttpGet("GetAllUsers")]
-        public async Task<IActionResult> GetAllUsers()
-        {
-            try
-            {
-                var result = await _userService.GetAll();
+                var result = await _userProfileService.GetAll();
                 return Ok(result);
             }
             catch (ControleAcessoException ex)
@@ -115,7 +46,7 @@ namespace ControleAcesso.API.Controllers
             {
                 var errorResponse = new 
                 {
-                    Message = "Erro ao tentar pegar todos os usuário",
+                    Message = "Erro ao tentar pegar todos os perfies dos usuários",
                 };
                 return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }
@@ -125,7 +56,7 @@ namespace ControleAcesso.API.Controllers
         {
             try
             {
-                var result = await _userService.GetById(id);
+                var result = await _userProfileService.GetById(id);
                 return Ok(result);
             }
             catch (ControleAcessoException ex)
@@ -148,17 +79,17 @@ namespace ControleAcesso.API.Controllers
             {
                 var errorResponse = new 
                 {
-                    Message = "Erro ao tentar pegar usuário",
+                    Message = "Erro ao tentar pegar perfil do usuário",
                 };
                 return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }
         }
-        [HttpGet("GetPersonalUser")]
-        public async Task<IActionResult> GetPersonalUser()
+        [HttpGet("GetByProfileId/{id}")]
+        public async Task<IActionResult> GetByProfileId(long id)
         {
             try
             {
-                var result = await _userService.GetById(User.GetUserId());
+                var result = await _userProfileService.GetByProfileId(id);
                 return Ok(result);
             }
             catch (ControleAcessoException ex)
@@ -181,17 +112,50 @@ namespace ControleAcesso.API.Controllers
             {
                 var errorResponse = new 
                 {
-                    Message = "Erro ao tentar pegar usuário",
+                    Message = "Erro ao tentar pegar perfil do usuário por perfil",
                 };
                 return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }
         }
-        [HttpPut("UpdatePersonalUser")]
-        public async Task<IActionResult> UpdatePerosnalUser(UserUpdateDTO model)
+        [HttpGet("GetByUserId/{id}")]
+        public async Task<IActionResult> GetByUserId(long id)
         {
             try
             {
-                var result = await _userService.Update(model, User.GetUserId());
+                var result = await _userProfileService.GetByUserId(id);
+                return Ok(result);
+            }
+            catch (ControleAcessoException ex)
+            {
+                var errorResponse = new 
+                {
+                    Message = ex.Message
+                };
+                return BadRequest(errorResponse);
+            }
+            catch(DomainExceptionValidation ex)
+            {
+                var errorResponse = new
+                {
+                    Message = ex.Message
+                };
+                return BadRequest(errorResponse);
+            }
+            catch (Exception)
+            {
+                var errorResponse = new 
+                {
+                    Message = "Erro ao tentar pegar perfil do usuário por perfil",
+                };
+                return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
+            }
+        }
+        [HttpPost("CreateProfile")]
+        public async Task<IActionResult> Create(UserProfileDTO model)
+        {
+            try
+            {
+                var result = await _userProfileService.Create(model);
                 return Ok(result);
             }
             catch(ControleAcessoException ex)
@@ -214,17 +178,50 @@ namespace ControleAcesso.API.Controllers
             {
                 var errorResponse = new
                 {
-                    Message = "Erro ao tentar alterar usuário",
+                    Message = "Erro ao tentar criar perfil do usuário",
                 };
                 return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }
         }
-        [HttpDelete("DeleteUser/{id}")]
+        [HttpPut("UpdateProfile")]
+        public async Task<IActionResult> Update(UserProfileDTO model)
+        {
+            try
+            {
+                var result = await _userProfileService.Update(model);
+                return Ok(result);
+            }
+            catch(ControleAcessoException ex)
+            {
+                var errorResponse = new
+                {
+                    Message = ex.Message
+                };
+                return BadRequest(errorResponse);
+            }
+            catch(DomainExceptionValidation ex)
+            {
+                var errorResponse = new
+                {
+                    Message = ex.Message
+                };
+                return BadRequest(errorResponse);
+            }
+            catch (Exception)
+            {
+                var errorResponse = new
+                {
+                    Message = "Erro ao tentar alterar perfil do usuário",
+                };
+                return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
+            }
+        }
+        [HttpDelete("DeleteProfile/{id}")]
         public async Task<IActionResult> Delete(long id)
         {
             try
             {
-                var result = await _userService.Delete(id);
+                var result = await _userProfileService.Delete(id);
                 return Ok(result);
             }
             catch(ControleAcessoException ex)
@@ -247,7 +244,7 @@ namespace ControleAcesso.API.Controllers
             {
                 var errorResponse = new
                 {
-                    Message = "Erro ao tentar deletar usuário"
+                    Message = "Erro ao tentar deletar perfil do usuário",
                 };
                 return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }

@@ -21,6 +21,16 @@ namespace ControleAcesso.Infra.Data
             builder.HasMany(u => u.FunctionalityProfiles)
                     .WithOne(up => up.Functionality)
                     .HasForeignKey(up => up.FunctionalityId);
+            
+            builder.HasData(
+                new Functionality(1, "Manter perfil", "Funcionalidade para manter todos os perfis do sistema"),
+                new Functionality(2, "Manter metodos", "Funcionalidade para manter todos os metodos do sistema"),
+                new Functionality(3, "Manter funcionalidades", "Funcionalidade para manter todas as funcionalidades do sistema"),
+                new Functionality(4, "Manter menus", "Funcionalidade para manter todos os menus do sistema"),
+                new Functionality(5, "Manter perfis do usuario", "Funcionalidade para manter todos os perfeis de usuarios"),
+                new Functionality(6, "Manter funcionalidade perfis", "Funcionalidade para manter todos os menus do sistema"),
+                new Functionality(7, "Manter perfil próprio", "Funcionalidade para manter o próprio perfil no sistema")
+            );
         }
     }
 }

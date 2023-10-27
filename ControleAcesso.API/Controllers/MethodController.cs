@@ -1,4 +1,3 @@
-using ControleAcesso.API.Extensions;
 using ControleAcesso.Application.DTOs;
 using ControleAcesso.Application.Exceptions;
 using ControleAcesso.Application.Interfaces;
@@ -11,88 +10,19 @@ namespace ControleAcesso.API.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController : ControllerBase
+    public class MethodController : ControllerBase
     {
-        private readonly IUserService _userService;
-
-        public UserController(IUserService userService)
+        private readonly IMethodService _methodService;
+        public MethodController(IMethodService methodService)
         {
-            _userService = userService;
-        }
-        [HttpPost("Register")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Register(UserRegistrationDTO model)
+            _methodService = methodService;
+        } 
+        [HttpGet("GetAllMethod")]
+        public async Task<IActionResult> GetAllMethod()
         {
             try
             {
-                var result = await _userService.Create(model, HttpContext.Connection.RemoteIpAddress.ToString());
-                return Ok(result);
-            }
-            catch(ControleAcessoException ex)
-            {
-                var errorResponse = new
-                {
-                    Message = ex.Message
-                };
-                return BadRequest(errorResponse);
-            }
-            catch(DomainExceptionValidation ex)
-            {
-                var errorResponse = new
-                {
-                    Message = ex.Message
-                };
-                return BadRequest(errorResponse);
-            }
-            catch (Exception ex)
-            {
-                var errorResponse = new
-                {
-                    Message = "Erro ao tentar adicionar usuário",
-                };
-                return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
-            }
-        }
-        [HttpPost("Login")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Login(UserLoginDTO model)
-        {
-            try
-            {
-                var result = await _userService.Login(model, HttpContext.Connection.RemoteIpAddress.ToString());
-                return Ok(result);
-            }
-            catch (ControleAcessoException ex)
-            {
-                var errorResponse = new 
-                {
-                    Message = ex.Message
-                };
-                return BadRequest(errorResponse);
-            }
-            catch(DomainExceptionValidation ex)
-            {
-                var errorResponse = new
-                {
-                    Message = ex.Message
-                };
-                return BadRequest(errorResponse);
-            }
-            catch (Exception ex)
-            {
-                var errorResponse = new 
-                {
-                    Message = "Erro ao tentar fazer login"
-                };
-                return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
-            }
-        }
-        [HttpGet("GetAllUsers")]
-        public async Task<IActionResult> GetAllUsers()
-        {
-            try
-            {
-                var result = await _userService.GetAll();
+                var result = await _methodService.GetAll();
                 return Ok(result);
             }
             catch (ControleAcessoException ex)
@@ -115,7 +45,7 @@ namespace ControleAcesso.API.Controllers
             {
                 var errorResponse = new 
                 {
-                    Message = "Erro ao tentar pegar todos os usuário",
+                    Message = "Erro ao tentar pegar todos os metodos",
                 };
                 return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }
@@ -125,7 +55,7 @@ namespace ControleAcesso.API.Controllers
         {
             try
             {
-                var result = await _userService.GetById(id);
+                var result = await _methodService.GetById(id);
                 return Ok(result);
             }
             catch (ControleAcessoException ex)
@@ -148,17 +78,17 @@ namespace ControleAcesso.API.Controllers
             {
                 var errorResponse = new 
                 {
-                    Message = "Erro ao tentar pegar usuário",
+                    Message = "Erro ao tentar pegar metodo",
                 };
                 return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }
         }
-        [HttpGet("GetPersonalUser")]
-        public async Task<IActionResult> GetPersonalUser()
+        [HttpGet("GetByFunctionalityId/{id}")]
+        public async Task<IActionResult> GetByFunctionalityId(long id)
         {
             try
             {
-                var result = await _userService.GetById(User.GetUserId());
+                var result = await _methodService.GetByFunctionalityId(id);
                 return Ok(result);
             }
             catch (ControleAcessoException ex)
@@ -181,17 +111,17 @@ namespace ControleAcesso.API.Controllers
             {
                 var errorResponse = new 
                 {
-                    Message = "Erro ao tentar pegar usuário",
+                    Message = "Erro ao tentar pegar metodo por funcionalidade",
                 };
                 return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }
         }
-        [HttpPut("UpdatePersonalUser")]
-        public async Task<IActionResult> UpdatePerosnalUser(UserUpdateDTO model)
+        [HttpPost("CreateMethod")]
+        public async Task<IActionResult> Create(MethodDTO model)
         {
             try
             {
-                var result = await _userService.Update(model, User.GetUserId());
+                var result = await _methodService.Create(model);
                 return Ok(result);
             }
             catch(ControleAcessoException ex)
@@ -214,17 +144,50 @@ namespace ControleAcesso.API.Controllers
             {
                 var errorResponse = new
                 {
-                    Message = "Erro ao tentar alterar usuário",
+                    Message = "Erro ao tentar criar metodo",
                 };
                 return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }
         }
-        [HttpDelete("DeleteUser/{id}")]
+        [HttpPut("UpdateMethod")]
+        public async Task<IActionResult> Update(MethodDTO model)
+        {
+            try
+            {
+                var result = await _methodService.Update(model);
+                return Ok(result);
+            }
+            catch(ControleAcessoException ex)
+            {
+                var errorResponse = new
+                {
+                    Message = ex.Message
+                };
+                return BadRequest(errorResponse);
+            }
+            catch(DomainExceptionValidation ex)
+            {
+                var errorResponse = new
+                {
+                    Message = ex.Message
+                };
+                return BadRequest(errorResponse);
+            }
+            catch (Exception)
+            {
+                var errorResponse = new
+                {
+                    Message = "Erro ao tentar alterar metodo",
+                };
+                return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
+            }
+        }
+        [HttpDelete("DeleteMethod/{id}")]
         public async Task<IActionResult> Delete(long id)
         {
             try
             {
-                var result = await _userService.Delete(id);
+                var result = await _methodService.Delete(id);
                 return Ok(result);
             }
             catch(ControleAcessoException ex)
@@ -247,10 +210,17 @@ namespace ControleAcesso.API.Controllers
             {
                 var errorResponse = new
                 {
-                    Message = "Erro ao tentar deletar usuário"
+                    Message = "Erro ao tentar deletar metodo",
                 };
                 return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }
+        }
+        [AllowAnonymous]
+        [HttpPost("Teste")]
+        public async Task<IActionResult> teste(int userId, string className, string action)
+        {
+            var result = await _methodService.GetPermissionMethodByUserId(userId, className, action);
+            return Ok(result);
         }
     }
 }

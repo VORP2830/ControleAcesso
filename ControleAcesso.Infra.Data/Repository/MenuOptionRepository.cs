@@ -28,5 +28,15 @@ namespace ControleAcesso.Infra.Data.Repository
                                     .Where(mo => mo.FunctionalityId == functionalityId)
                                     .ToListAsync();
         }
+        public async Task<IEnumerable<MenuOption>> GetForUserIdAsync(long userId)
+        {
+            return await _context.UsersProfiles
+                                    .Where(up => up.UserId == userId)
+                                    .SelectMany(up => up.Profile.FunctionalityProfiles)
+                                    .Select(fp => fp.Functionality.MenuOption)
+                                    .Distinct()
+                                    .OrderBy(mo => mo.Position)
+                                    .ToListAsync();
+        }
     }
 }

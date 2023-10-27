@@ -52,5 +52,11 @@ namespace ControleAcesso.Application.Services
             await _unitOfWork.SaveChangesAsync();
             return _mapper.Map<MenuOptionDTO>(menuOption);
         }
+
+        public async Task<IEnumerable<MenuOptionDTO>> GetForUserIdAsync(long userId)
+        {
+            IEnumerable<MenuOption> menuOptions = await _unitOfWork.MenuOptionRepository.GetForUserIdAsync(userId);
+            return _mapper.Map<IEnumerable<MenuOptionDTO>>(menuOptions);
+        }
     }
 }

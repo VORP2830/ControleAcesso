@@ -10,7 +10,7 @@ namespace ControleAcesso.Application.Interfaces
         Task<IEnumerable<UserDTO>> GetAll();
         Task<Object> Login(UserLoginDTO model, string ipClient);
         Task<Object> Create(UserRegistrationDTO model, string ipClient);
-        Task<UserDTO> Update(UserDTO model, long userId);
+        Task<UserDTO> Update(UserUpdateDTO model, long userId);
         Task<UserDTO> Delete(long id);
     }
 }

@@ -12,5 +12,14 @@ namespace ControleAcesso.Infra.Data.Repository
         {
            _context = context;
         }
+
+        public async Task<IEnumerable<UserAccess>> GetTop5ByUserName(string userName)
+        {
+            return await _context.UsersAccesses
+                                    .Where(u => u.UserName == userName)
+                                    .OrderByDescending(u => u.AccessDate)
+                                    .Take(5)
+                                    .ToListAsync();
+        }
     }
 }
