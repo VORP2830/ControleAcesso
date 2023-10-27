@@ -7,6 +7,6 @@ namespace ControleAcesso.Application.DTOs
         public string ClassName { get; set; }
         public string Action { get; set; }
         public long FunctionalityId { get; set; }
-        public FunctionalityDTO FunctionalityDTO { get; set; }
+        public bool? Active { get; set; }
     }
 }

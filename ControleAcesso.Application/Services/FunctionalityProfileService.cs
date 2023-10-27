@@ -40,14 +40,14 @@ namespace ControleAcesso.Application.Services
             FunctionalityProfile functionalityProfile = _mapper.Map<FunctionalityProfile>(model);
             _unitOfWork.FunctionalityProfileRepository.Add(functionalityProfile);
             await _unitOfWork.SaveChangesAsync();
-            return model;
+            return _mapper.Map<FunctionalityProfileDTO>(functionalityProfile);
         }
         public async Task<FunctionalityProfileDTO> Update(FunctionalityProfileDTO model)
         {
             FunctionalityProfile functionalityProfile = _mapper.Map<FunctionalityProfile>(model);
             _unitOfWork.FunctionalityProfileRepository.Update(functionalityProfile);
             await _unitOfWork.SaveChangesAsync();
-            return model;
+            return _mapper.Map<FunctionalityProfileDTO>(functionalityProfile);
         }
         public async Task<FunctionalityProfileDTO> Delete(long id)
         {

@@ -35,14 +35,14 @@ namespace ControleAcesso.Application.Services
             MenuOption menuOption = _mapper.Map<MenuOption>(model);
             _unitOfWork.MenuOptionRepository.Update(menuOption);
             await _unitOfWork.SaveChangesAsync();
-            return model;
+            return _mapper.Map<MenuOptionDTO>(menuOption);
         }
         public async Task<MenuOptionDTO> Create(MenuOptionDTO model)
         {
             MenuOption menuOption = _mapper.Map<MenuOption>(model);
             _unitOfWork.MenuOptionRepository.Add(menuOption);
             await _unitOfWork.SaveChangesAsync();
-            return model;
+            return _mapper.Map<MenuOptionDTO>(menuOption);
         }
         public async Task<MenuOptionDTO> Delete(long id)
         {
@@ -53,7 +53,7 @@ namespace ControleAcesso.Application.Services
             return _mapper.Map<MenuOptionDTO>(menuOption);
         }
 
-        public async Task<IEnumerable<MenuOptionDTO>> GetForUserIdAsync(long userId)
+        public async Task<IEnumerable<MenuOptionDTO>> GetForUserId(long userId)
         {
             IEnumerable<MenuOption> menuOptions = await _unitOfWork.MenuOptionRepository.GetForUserIdAsync(userId);
             return _mapper.Map<IEnumerable<MenuOptionDTO>>(menuOptions);

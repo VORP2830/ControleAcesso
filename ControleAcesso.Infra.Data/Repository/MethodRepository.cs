@@ -30,14 +30,20 @@ namespace ControleAcesso.Infra.Data.Repository
         public async Task<Methods> GetMethodByUserId(long userId, string className, string action)
         {
             return await _context.UsersProfiles
-                                    .Where(up => up.UserId == userId)
+                                    .Where(up => up.UserId == userId && 
+                                                up.User.Active == true &&
+                                                up.Active && 
+                                                up.Profile.Active == true)
                                     .SelectMany(up => up.Profile.FunctionalityProfiles)
                                     .SelectMany(fp => fp.Functionality.Methods)
                                     .Where(method => 
                                         method.ClassName == className &&
-                                        method.Action == action)
-                                    .Distinct()
+                                        method.Action == action &&
+                                        method.Active &&
+                                        method.Functionality.Active &&
+                                        method.Functionality.FunctionalityProfiles.Any(fp => fp.Active))
                                     .FirstOrDefaultAsync();
         }
+
     }
 }

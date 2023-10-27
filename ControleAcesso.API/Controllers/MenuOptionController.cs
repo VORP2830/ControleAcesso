@@ -117,12 +117,12 @@ namespace ControleAcesso.API.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }
         }
-        [HttpGet("GetForUserIdAsync")]
-        public async Task<IActionResult> GetForUserIdAsync()
+        [HttpGet("GetForUserId")]
+        public async Task<IActionResult> GetForUserId()
         {
             try
             {
-                var result = await _menuOptionService.GetForUserIdAsync(User.GetUserId());
+                var result = await _menuOptionService.GetForUserId(User.GetUserId());
                 return Ok(result);
             }
             catch (ControleAcessoException ex)
@@ -141,11 +141,12 @@ namespace ControleAcesso.API.Controllers
                 };
                 return BadRequest(errorResponse);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 var errorResponse = new 
                 {
                     Message = "Erro ao tentar pegar todos os menus",
+                    e = ex.Message
                 };
                 return this.StatusCode(StatusCodes.Status500InternalServerError, errorResponse);
             }

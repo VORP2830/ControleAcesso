@@ -216,8 +216,8 @@ namespace ControleAcesso.API.Controllers
             }
         }
         [AllowAnonymous]
-        [HttpPost("Teste")]
-        public async Task<IActionResult> teste(int userId, string className, string action)
+        [HttpPost("ValidateAccessClassMethod")]
+        public async Task<IActionResult> ValidateAccessClassMethod(int userId, string className, string action)
         {
             var result = await _methodService.GetPermissionMethodByUserId(userId, className, action);
             return Ok(result);

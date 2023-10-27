@@ -31,12 +31,16 @@ namespace ControleAcesso.Infra.Data
 				new Methods(2, "Pegar qualquer usuario do sistema por id", "UserController", "GetById", 1),
 				new Methods(3, "Deletar qualquer usuario do sistema", "UserController", "Delete", 1),
 				
+				new Methods(36, "Pegar o proprio usuário do sistema", "UserController", "GetPersonalUser", 7),
+				new Methods(37, "Alterar o proprio usuário do sistema", "UserController", "UpdatePerosnalUser", 7),
+				
 				new Methods(4, "Pegar todos os metodos do sistema", "MethodController", "GetAllMethod", 2),
 				new Methods(5, "Pegar metodo por id do sistema", "MethodController", "GetById", 2),
 				new Methods(6, "Pegar metodos por funcionalidade", "MethodController", "GetByFunctionalityId", 2),
 				new Methods(7, "Criar metodo", "MethodController", "Create", 2),
 				new Methods(8, "Atualizar metodo", "MethodController", "Update", 2),
 				new Methods(9, "Deletar metodo", "MethodController", "Delete", 2),
+				new Methods(38, "Verificação externa de ações", "MethodController", "ValidateAccessClassMethod", 2),
 				
 				new Methods(10, "Pegar todas as funcionalidades do sistema", "FunctionalityController", "GetAllFunctionality", 3),
 				new Methods(11, "Pegar funcionalidade por id", "FunctionalityController", "GetById", 3),
@@ -66,10 +70,7 @@ namespace ControleAcesso.Infra.Data
 				new Methods(32, "Pegar usuários perfis por perfil", "UserProfileController", "GetByProfileId", 6),
 				new Methods(33, "Criar usuário perfil", "UserProfileController", "Create", 6),
 				new Methods(34, "Alterar usuário perfil", "UserProfileController", "Update", 6),
-				new Methods(35, "Deletar usuário perfil", "UserProfileController", "Delete", 6),
-				
-				new Methods(36, "Pegar o proprio usuário do sistema", "UserController", "GetPersonalUser", 7),
-				new Methods(37, "Alterar o proprio usuário do sistema", "UserController", "UpdatePerosnalUser", 7)
+				new Methods(35, "Deletar usuário perfil", "UserProfileController", "Delete", 6)
             );
         }
     }

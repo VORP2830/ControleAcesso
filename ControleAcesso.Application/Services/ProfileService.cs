@@ -32,7 +32,7 @@ namespace ControleAcesso.Application.Services
             var profile = _mapper.Map<Domain.Entities.Profile>(model);
             _unitOfWork.ProfileRepository.Add(profile);
             await _unitOfWork.SaveChangesAsync();
-            return model;
+            return _mapper.Map<ProfileDTO>(profile);
         }
 
         public async Task<ProfileDTO> Delete(long id)
@@ -49,7 +49,7 @@ namespace ControleAcesso.Application.Services
             var profile = _mapper.Map<Domain.Entities.Profile>(model);
             _unitOfWork.ProfileRepository.Update(profile);
             await _unitOfWork.SaveChangesAsync();
-            return model;
+            return _mapper.Map<ProfileDTO>(profile);
         }
     }
 }

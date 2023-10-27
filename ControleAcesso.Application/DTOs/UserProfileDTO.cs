@@ -5,7 +5,6 @@ namespace ControleAcesso.Application.DTOs
         public long Id { get; set; }
         public long UserId { get; set; }
         public long ProfileId { get; set; }
-        public UserDTO UserDTO { get; set; }
-        public ProfileDTO ProfileDTO { get; set; }
+        public bool? Active { get; set; }
     }
 }

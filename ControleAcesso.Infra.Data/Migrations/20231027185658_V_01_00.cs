@@ -94,7 +94,7 @@ namespace ControleAcesso.Infra.Data.Migrations
                     URL = table.Column<string>(type: "text", nullable: false),
                     Position = table.Column<int>(type: "integer", nullable: false),
                     MenuDadId = table.Column<long>(type: "bigint", nullable: true),
-                    FunctionalityId = table.Column<long>(type: "bigint", nullable: false),
+                    FunctionalityId = table.Column<long>(type: "bigint", nullable: true),
                     Active = table.Column<bool>(type: "boolean", nullable: false),
                     ModifiedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
@@ -106,8 +106,7 @@ namespace ControleAcesso.Infra.Data.Migrations
                         name: "FK_MenuOptions_Functionalities_FunctionalityId",
                         column: x => x.FunctionalityId,
                         principalTable: "Functionalities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_MenuOptions_MenuOptions_MenuDadId",
                         column: x => x.MenuDadId,
@@ -272,7 +271,8 @@ namespace ControleAcesso.Infra.Data.Migrations
                     { 34L, "Update", true, "UserProfileController", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Alterar usuário perfil", 6L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
                     { 35L, "Delete", true, "UserProfileController", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Deletar usuário perfil", 6L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
                     { 36L, "GetPersonalUser", true, "UserController", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Pegar o proprio usuário do sistema", 7L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 37L, "UpdatePerosnalUser", true, "UserController", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Alterar o proprio usuário do sistema", 7L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { 37L, "UpdatePerosnalUser", true, "UserController", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Alterar o proprio usuário do sistema", 7L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 38L, "ValidateAccessClassMethod", true, "MethodController", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Verificação externa de ações", 2L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.CreateIndex(

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ControleAcesso.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231027153229_V_01_00")]
+    [Migration("20231027185658_V_01_00")]
     partial class V_01_00
     {
         /// <inheritdoc />
@@ -233,7 +233,7 @@ namespace ControleAcesso.Infra.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long>("FunctionalityId")
+                    b.Property<long?>("FunctionalityId")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("MenuDadId")
@@ -341,6 +341,28 @@ namespace ControleAcesso.Infra.Data.Migrations
                         },
                         new
                         {
+                            Id = 36L,
+                            Action = "GetPersonalUser",
+                            Active = true,
+                            ClassName = "UserController",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Pegar o proprio usuário do sistema",
+                            FunctionalityId = 7L,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 37L,
+                            Action = "UpdatePerosnalUser",
+                            Active = true,
+                            ClassName = "UserController",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Alterar o proprio usuário do sistema",
+                            FunctionalityId = 7L,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
                             Id = 4L,
                             Action = "GetAllMethod",
                             Active = true,
@@ -402,6 +424,17 @@ namespace ControleAcesso.Infra.Data.Migrations
                             ClassName = "MethodController",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Deletar metodo",
+                            FunctionalityId = 2L,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 38L,
+                            Action = "ValidateAccessClassMethod",
+                            Active = true,
+                            ClassName = "MethodController",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Verificação externa de ações",
                             FunctionalityId = 2L,
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -690,28 +723,6 @@ namespace ControleAcesso.Infra.Data.Migrations
                             Description = "Deletar usuário perfil",
                             FunctionalityId = 6L,
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 36L,
-                            Action = "GetPersonalUser",
-                            Active = true,
-                            ClassName = "UserController",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Pegar o proprio usuário do sistema",
-                            FunctionalityId = 7L,
-                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 37L,
-                            Action = "UpdatePerosnalUser",
-                            Active = true,
-                            ClassName = "UserController",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Alterar o proprio usuário do sistema",
-                            FunctionalityId = 7L,
-                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -885,9 +896,7 @@ namespace ControleAcesso.Infra.Data.Migrations
                 {
                     b.HasOne("ControleAcesso.Domain.Entities.Functionality", "Functionality")
                         .WithOne("MenuOption")
-                        .HasForeignKey("ControleAcesso.Domain.Entities.MenuOption", "FunctionalityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ControleAcesso.Domain.Entities.MenuOption", "FunctionalityId");
 
                     b.HasOne("ControleAcesso.Domain.Entities.MenuOption", "MenuDad")
                         .WithMany()

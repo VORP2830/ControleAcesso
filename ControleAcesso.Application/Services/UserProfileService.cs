@@ -40,14 +40,14 @@ namespace ControleAcesso.Application.Services
             UserProfile userProfile = _mapper.Map<UserProfile>(model);
             _unitOfWork.UserProfileRepository.Update(userProfile);
             await _unitOfWork.SaveChangesAsync();
-            return model;        
+            return _mapper.Map<UserProfileDTO>(userProfile);        
         }
         public async Task<UserProfileDTO> Create(UserProfileDTO model)
         {
             UserProfile userProfile = _mapper.Map<UserProfile>(model);
             _unitOfWork.UserProfileRepository.Add(userProfile);
             await _unitOfWork.SaveChangesAsync();
-            return model;        
+            return _mapper.Map<UserProfileDTO>(userProfile);
         }
         public async Task<UserProfileDTO> Delete(long id)
         {

@@ -10,6 +10,6 @@ namespace ControleAcesso.Application.Interfaces
         Task<MenuOptionDTO> Create(MenuOptionDTO model);
         Task<MenuOptionDTO> Update(MenuOptionDTO model);
         Task<MenuOptionDTO> Delete(long id);
-        Task<IEnumerable<MenuOptionDTO>> GetForUserIdAsync(long userId);
+        Task<IEnumerable<MenuOptionDTO>> GetForUserId(long userId);
     }
 }

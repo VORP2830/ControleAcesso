@@ -8,11 +8,11 @@ namespace ControleAcesso.Domain.Entities
         public string URL { get; private set; }
         public int Position { get; private set; }
         public long? MenuDadId { get; private set; }
-        public long FunctionalityId { get; private set; }
+        public long? FunctionalityId { get; private set; }
         public MenuOption MenuDad { get; private set; }
-        public Functionality Functionality { get; private set; }       
+        public Functionality Functionality { get; private set; }
         protected MenuOption() { }
-        public MenuOption(string name, string url, int position, long? menuDadId, long functionalityId) 
+        public MenuOption(string name, string url, int position, long? menuDadId, long? functionalityId) 
         { 
             ValidateDomain(name, url, position, menuDadId, functionalityId);
             Position = position;
@@ -20,7 +20,7 @@ namespace ControleAcesso.Domain.Entities
             FunctionalityId = functionalityId;
             Active = true;
         }
-        public MenuOption(long id, string name, string url, int position, long? menuDadId, long functionalityId) 
+        public MenuOption(long id, string name, string url, int position, long? menuDadId, long? functionalityId) 
         { 
             DomainExceptionValidation.When(id < 0, "Id invalido. O id deve ser maior que 0");
             Id = id;
@@ -30,7 +30,7 @@ namespace ControleAcesso.Domain.Entities
             FunctionalityId = functionalityId;
             Active = true;
         }
-        private void ValidateDomain(string name, string url, int position, long? menuDadId, long functionalityId)
+        private void ValidateDomain(string name, string url, int position, long? menuDadId, long? functionalityId)
         {
             DomainExceptionValidation.When(string.IsNullOrEmpty(name), "Nome invalido. Nome é obrigatório.");
             DomainExceptionValidation.When(name.Length < 3, "Nome invávido. Nome deve contar mais de 3 caracteres.");
