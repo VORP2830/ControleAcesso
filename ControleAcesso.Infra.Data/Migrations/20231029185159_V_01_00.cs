@@ -214,7 +214,11 @@ namespace ControleAcesso.Infra.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Profiles",
                 columns: new[] { "Id", "Active", "CreatedAt", "Description", "ModifiedAt", "Name" },
-                values: new object[] { 1L, true, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Administrador do sistema", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Administrador" });
+                values: new object[,]
+                {
+                    { 1L, true, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Administrador do sistema", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Administrador" },
+                    { 2L, true, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Usuário comum", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Usuário comum" }
+                });
 
             migrationBuilder.InsertData(
                 table: "FunctionalitiesProfiles",
@@ -227,7 +231,8 @@ namespace ControleAcesso.Infra.Data.Migrations
                     { 4L, true, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 4L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
                     { 5L, true, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 5L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
                     { 6L, true, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 6L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
-                    { 7L, true, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 7L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L }
+                    { 7L, true, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 7L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1L },
+                    { 8L, true, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 7L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2L }
                 });
 
             migrationBuilder.InsertData(
@@ -251,11 +256,11 @@ namespace ControleAcesso.Infra.Data.Migrations
                     { 14L, "Delete", true, "FunctionalityController", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Deletar funcionalidades", 3L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
                     { 15L, "GetAllMenuOption", true, "MenuOptionController", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Pegar todos os menus", 4L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
                     { 16L, "GetById", true, "MenuOptionController", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Pegar menu por id", 4L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 17L, "GetByFunctionalityId", true, "MenuOptionController", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Pegar menus por funcionalidade", 4L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 18L, "Create", true, "MenuOptionController", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Criar funcionalidade", 4L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 19L, "Update", true, "MenuOptionController", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Alterar funcionalidade", 4L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 20L, "Delete", true, "MenuOptionController", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Deletar funcionalidade", 4L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 21L, "GetForUserIdAsync", true, "MenuOptionController", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Deletar funcionalidade", 4L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 17L, "GetByFunctionalityId", true, "MenuOptionController", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Pegar menus por menu", 4L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 18L, "Create", true, "MenuOptionController", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Criar menu", 4L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 19L, "Update", true, "MenuOptionController", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Alterar menus", 4L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 20L, "Delete", true, "MenuOptionController", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Deletar menus", 4L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 21L, "GetForUserId", true, "MenuOptionController", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Pegar menus do proprio usuário", 7L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
                     { 22L, "GetAllFunctionalityProfiles", true, "FunctionalityProfileController", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Pegar todas as funcionalidades perfis do sistema", 5L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
                     { 23L, "GetById", true, "FunctionalityProfileController", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Pegar funcionalidade perfil por id", 5L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
                     { 24L, "GetByFunctionalityId", true, "FunctionalityProfileController", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Pegar funcionalidades perfis por funcionalidade", 5L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
@@ -288,8 +293,7 @@ namespace ControleAcesso.Infra.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_MenuOptions_FunctionalityId",
                 table: "MenuOptions",
-                column: "FunctionalityId",
-                unique: true);
+                column: "FunctionalityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MenuOptions_MenuDadId",

@@ -15,8 +15,8 @@ namespace ControleAcesso.Infra.Data
                         .IsRequired();
                         
             builder.HasOne(mo => mo.Functionality)
-                    .WithOne(f => f.MenuOption)
-                    .HasForeignKey<MenuOption>(mo => mo.FunctionalityId).IsRequired(false);
+                    .WithMany(f => f.MenuOptions)
+                    .HasForeignKey(mo => mo.FunctionalityId).IsRequired(false);
         }
     }
 }

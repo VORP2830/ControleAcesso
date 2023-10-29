@@ -56,14 +56,22 @@ namespace ControleAcesso.Application.Services
         public async Task<IEnumerable<MenuOptionDTO>> GetForUserId(long userId)
         {
             IEnumerable<MenuOption> menuOptions = await _unitOfWork.MenuOptionRepository.GetForUserIdAsync(userId);
+            //return _mapper.Map<IEnumerable<MenuOptionDTO>>(menuOptions);
             List<MenuOptionDTO> menuTree = new List<MenuOptionDTO>();
             foreach(MenuOption menuOption in menuOptions)
             {
-                MenuOption menuOptionDad = await _unitOfWork.MenuOptionRepository.GetByIdAsync(menuOption.MenuDadId.Value);
-                MenuOptionDTO menuOptionDto = _mapper.Map<MenuOptionDTO>(menuOptionDad);
-                if (!menuTree.Any(x => x.Id == menuOptionDto.Id))
+                if(menuOption.MenuDadId.HasValue)
                 {
-                    menuTree.Add(menuOptionDto);
+                    MenuOption menuOptionDad = await _unitOfWork.MenuOptionRepository.GetByIdAsync(menuOption.MenuDadId.Value);
+                    MenuOptionDTO menuOptionDto = _mapper.Map<MenuOptionDTO>(menuOptionDad);
+                    if (!menuTree.Any(x => x.Id == menuOptionDto.Id))
+                    {
+                        menuTree.Add(menuOptionDto);
+                    }
+                }
+                else
+                {
+                    menuTree.Add(_mapper.Map<MenuOptionDTO>(menuOption));
                 }
             }          
             menuTree = menuTree.OrderBy(menu => menu.Position).ToList();

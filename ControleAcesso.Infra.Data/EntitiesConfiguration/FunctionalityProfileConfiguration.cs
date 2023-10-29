@@ -25,7 +25,8 @@ namespace ControleAcesso.Infra.Data
                 new FunctionalityProfile(4, 1, 4),
                 new FunctionalityProfile(5, 1, 5),
                 new FunctionalityProfile(6, 1, 6),
-                new FunctionalityProfile(7, 1, 7)
+                new FunctionalityProfile(7, 1, 7),
+                new FunctionalityProfile(8, 2, 7)
             );
         }
     }

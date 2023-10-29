@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ControleAcesso.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231027185658_V_01_00")]
+    [Migration("20231029185159_V_01_00")]
     partial class V_01_00
     {
         /// <inheritdoc />
@@ -216,6 +216,15 @@ namespace ControleAcesso.Infra.Data.Migrations
                             FunctionalityId = 7L,
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ProfileId = 1L
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            Active = true,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FunctionalityId = 7L,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ProfileId = 2L
                         });
                 });
 
@@ -256,8 +265,7 @@ namespace ControleAcesso.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FunctionalityId")
-                        .IsUnique();
+                    b.HasIndex("FunctionalityId");
 
                     b.HasIndex("MenuDadId");
 
@@ -358,6 +366,17 @@ namespace ControleAcesso.Infra.Data.Migrations
                             ClassName = "UserController",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Alterar o proprio usuário do sistema",
+                            FunctionalityId = 7L,
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 21L,
+                            Action = "GetForUserId",
+                            Active = true,
+                            ClassName = "MenuOptionController",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Pegar menus do proprio usuário",
                             FunctionalityId = 7L,
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -522,7 +541,7 @@ namespace ControleAcesso.Infra.Data.Migrations
                             Active = true,
                             ClassName = "MenuOptionController",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Pegar menus por funcionalidade",
+                            Description = "Pegar menus por menu",
                             FunctionalityId = 4L,
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -533,7 +552,7 @@ namespace ControleAcesso.Infra.Data.Migrations
                             Active = true,
                             ClassName = "MenuOptionController",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Criar funcionalidade",
+                            Description = "Criar menu",
                             FunctionalityId = 4L,
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -544,7 +563,7 @@ namespace ControleAcesso.Infra.Data.Migrations
                             Active = true,
                             ClassName = "MenuOptionController",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Alterar funcionalidade",
+                            Description = "Alterar menus",
                             FunctionalityId = 4L,
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -555,18 +574,7 @@ namespace ControleAcesso.Infra.Data.Migrations
                             Active = true,
                             ClassName = "MenuOptionController",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Deletar funcionalidade",
-                            FunctionalityId = 4L,
-                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 21L,
-                            Action = "GetForUserIdAsync",
-                            Active = true,
-                            ClassName = "MenuOptionController",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Deletar funcionalidade",
+                            Description = "Deletar menus",
                             FunctionalityId = 4L,
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
@@ -766,6 +774,15 @@ namespace ControleAcesso.Infra.Data.Migrations
                             Description = "Administrador do sistema",
                             ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Administrador"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Active = true,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Usuário comum",
+                            ModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Usuário comum"
                         });
                 });
 
@@ -895,11 +912,11 @@ namespace ControleAcesso.Infra.Data.Migrations
             modelBuilder.Entity("ControleAcesso.Domain.Entities.MenuOption", b =>
                 {
                     b.HasOne("ControleAcesso.Domain.Entities.Functionality", "Functionality")
-                        .WithOne("MenuOption")
-                        .HasForeignKey("ControleAcesso.Domain.Entities.MenuOption", "FunctionalityId");
+                        .WithMany("MenuOptions")
+                        .HasForeignKey("FunctionalityId");
 
                     b.HasOne("ControleAcesso.Domain.Entities.MenuOption", "MenuDad")
-                        .WithMany()
+                        .WithMany("Children")
                         .HasForeignKey("MenuDadId");
 
                     b.Navigation("Functionality");
@@ -941,10 +958,14 @@ namespace ControleAcesso.Infra.Data.Migrations
                 {
                     b.Navigation("FunctionalityProfiles");
 
-                    b.Navigation("MenuOption")
-                        .IsRequired();
+                    b.Navigation("MenuOptions");
 
                     b.Navigation("Methods");
+                });
+
+            modelBuilder.Entity("ControleAcesso.Domain.Entities.MenuOption", b =>
+                {
+                    b.Navigation("Children");
                 });
 
             modelBuilder.Entity("ControleAcesso.Domain.Entities.Profile", b =>

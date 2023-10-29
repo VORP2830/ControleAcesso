@@ -35,7 +35,8 @@ namespace ControleAcesso.Infra.Data
                     .HasForeignKey(up => up.ProfileId);
 
             builder.HasData(
-                new Profile(1, "Administrador", "Administrador do sistema")
+                new Profile(1, "Administrador", "Administrador do sistema"),
+                new Profile(2, "Usuário comum", "Usuário comum")
             );
         }
     }

@@ -33,6 +33,7 @@ namespace ControleAcesso.Infra.Data
 				
 				new Methods(36, "Pegar o proprio usuário do sistema", "UserController", "GetPersonalUser", 7),
 				new Methods(37, "Alterar o proprio usuário do sistema", "UserController", "UpdatePerosnalUser", 7),
+				new Methods(21, "Pegar menus do proprio usuário", "MenuOptionController", "GetForUserId", 7),
 				
 				new Methods(4, "Pegar todos os metodos do sistema", "MethodController", "GetAllMethod", 2),
 				new Methods(5, "Pegar metodo por id do sistema", "MethodController", "GetById", 2),
@@ -50,11 +51,10 @@ namespace ControleAcesso.Infra.Data
 
 				new Methods(15, "Pegar todos os menus", "MenuOptionController", "GetAllMenuOption", 4),
 				new Methods(16, "Pegar menu por id", "MenuOptionController", "GetById", 4),
-				new Methods(17, "Pegar menus por funcionalidade", "MenuOptionController", "GetByFunctionalityId", 4),
-				new Methods(18, "Criar funcionalidade", "MenuOptionController", "Create", 4),
-				new Methods(19, "Alterar funcionalidade", "MenuOptionController", "Update", 4),
-				new Methods(20, "Deletar funcionalidade", "MenuOptionController", "Delete", 4),
-				new Methods(21, "Deletar funcionalidade", "MenuOptionController", "GetForUserIdAsync", 4),
+				new Methods(17, "Pegar menus por menu", "MenuOptionController", "GetByFunctionalityId", 4),
+				new Methods(18, "Criar menu", "MenuOptionController", "Create", 4),
+				new Methods(19, "Alterar menus", "MenuOptionController", "Update", 4),
+				new Methods(20, "Deletar menus", "MenuOptionController", "Delete", 4),
 				
 				new Methods(22, "Pegar todas as funcionalidades perfis do sistema", "FunctionalityProfileController", "GetAllFunctionalityProfiles", 5),
 				new Methods(23, "Pegar funcionalidade perfil por id", "FunctionalityProfileController", "GetById", 5),
