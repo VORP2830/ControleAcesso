@@ -9,6 +9,6 @@ namespace ControleAcesso.Application.DTOs
         public long? MenuDadId { get; set; }
         public long FunctionalityId { get; set; }
         public bool? Active { get; set; }
-        public MenuOptionDTO MenuDadDTO { get; set; }
+        public ICollection<MenuOptionDTO> Children { get; set; }
     }
 }

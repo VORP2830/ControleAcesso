@@ -39,7 +39,6 @@ namespace ControleAcesso.Application.Services
             User user = await _unitOfWork.UserRepository.GetByUserNameAsync(userName);
             return _mapper.Map<UserDTO>(user);
         }
-        //#TODO Resolver problema do bloqueio e adicionar acessos na tabela de acesso usuario
         public async Task<Object> Login(UserLoginDTO model, string ipClient)
         {
             UserAccess userAccess = new UserAccess(model.UserName, ipClient);
@@ -48,28 +47,36 @@ namespace ControleAcesso.Application.Services
             if (userLogin != null)
             {
                 isSuccess = BCryptNet.BCrypt.Verify(model.Password, userLogin.Password);
-                if(!isSuccess && userLogin != null)
-                {
-                    //BlockUser(model.UserName);  
-                }
                 if (userLogin.Active == false)
                 {
+                    await SetUserAcess(userAccess, false);
                     throw new ControleAcessoException("Conta desativada. Entre em contato com o administrador");
                 }
                 if (userLogin.Blocked)
                 {
+                    await SetUserAcess(userAccess, false);
                     throw new ControleAcessoException("Conta bloqueada. Entre em contato com o administrador");
+                }
+                if(!isSuccess)
+                {
+                    await BlockUser(model.UserName);  
                 }
             }
             if (!isSuccess)
             {
+                await SetUserAcess(userAccess, isSuccess);
                 throw new ControleAcessoException("Usuário ou senha incorretos");
             }
-            var token = await _tokenService.GenerateToken(userLogin.Id, userLogin.UserName);
-            return new {
-                    name = userLogin.Name,
-                    token = token
-            };
+            if(isSuccess)
+            {
+                await SetUserAcess(userAccess, isSuccess);
+                var token = await _tokenService.GenerateToken(userLogin.Id, userLogin.UserName);
+                return new {
+                        name = userLogin.Name,
+                        token = token
+                };
+            }
+            throw new ControleAcessoException("Usuário ou senha incorretos");
         }
         public async Task<Object> Create(UserRegistrationDTO model, string ipClient)
         {
@@ -145,7 +152,7 @@ namespace ControleAcesso.Application.Services
                 }
             }
         }
-        private async Task UserAcess(UserAccess userAccess, bool isSuccess)
+        private async Task SetUserAcess(UserAccess userAccess, bool isSuccess)
         {
             userAccess.SetSuccess(isSuccess);
             _unitOfWork.UserAccessRepository.Add(userAccess);
